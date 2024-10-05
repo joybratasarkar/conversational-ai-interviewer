@@ -1,0 +1,41 @@
+//********************** new flow ************************
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  word-break: break-all;
+  word-break: break-word;
+  margin: 0;
+  padding: 0;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 4px;
+  border: 1px solid #d5d5d5;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 12px;
+  background: #deecff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 18px;
+  background: #778497;
+}
+
+html,
+body {
+  font-family: $Gabarito !important;
+}
+
+p,span,h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  padding: 0;
+}

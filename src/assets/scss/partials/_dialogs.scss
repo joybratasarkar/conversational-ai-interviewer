@@ -1,0 +1,91 @@
+// .cdk-overlay-dark-backdrop {
+//     background: rgba(0, 0, 0, 0.43);
+//     backdrop-filter: blur(8.5px);
+// }
+// .cdk-global-overlay-wrapper {
+//     display: flex;
+//     position: absolute;
+//     z-index: 1000;
+//     // align-items: flex-start !important;
+//     // padding-top: 12%;
+//     // background: rgba(0, 0, 0, 0.43);
+//     // backdrop-filter: blur(8.5px);
+// }
+
+// // .cdk-global-overlay-wrapper {
+// //     position: initial !important;
+// //     align-items: flex-start !important;
+// //     overflow: auto;
+// //     pointer-events: auto;
+// //     background: rgba(0, 0, 0, 0.43);
+// //     backdrop-filter: blur(8.5px);
+// //     // backdrop-filter: blur(12px);
+// // }
+// .mat-mdc-dialog-container .mdc-dialog__content {
+//     color: #0D141F !important;
+// }
+// .mdc-dialog .mdc-dialog__content {
+//     padding: 30px 32px !important;
+// }
+// textarea {
+//     resize: none !important;
+// }
+// .mat-mdc-dialog-content {
+//     max-height: 80vh !important;
+// }
+// .mat-mdc-dialog-container .mdc-dialog__surface {
+//     border-radius: 10px !important;
+// }
+
+// .open-mat-drawer{
+//     background: rgba(0, 0, 0, 0.43);
+//     backdrop-filter: blur(8.5px);
+// }
+
+
+// .message-dialog {
+//     padding: 0px;
+// }
+
+// .custom-dialog-body {
+//     color: $primary-black !important;
+//     background-color: #ffffff;
+//     box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);
+//     padding: 25px 30px;
+//     border-radius: 10px;
+//     margin-top: 100px !important;
+//     margin-bottom: 30px !important;
+//     max-height: calc(100vh - 130px);
+//     overflow-y: auto;
+
+//     &.videolink {
+//         max-height: inherit !important;
+//         overflow-y: inherit !important;
+//     }
+
+//     iframe {
+//         border-radius: 8px;
+//         border: solid 1px #F3F4F8;
+//     }
+
+//     .video-close-icon {
+//         position: absolute;
+//         right: -15px;
+//         top: -15px;
+//         border: none !important;
+//     }
+
+//     // @media (max-width: $screen_768) {
+//     //     margin-top: 20px !important;
+//     //     padding: 15px;
+//     // }
+
+//     .btn {
+//         &.btn-block {
+//             display: block;
+//             width: 100%;
+//             margin: 0px 0px 10px 0px !important;
+//         }
+//     }
+
+// }

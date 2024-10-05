@@ -1,0 +1,22 @@
+// new flow
+.interview-screen{
+  display: grid;
+  grid-template-columns: 25% 75%;
+  gap: 24px;
+  .subtitle-section-content{
+    // overflow-y: scroll;
+    overflow: auto;
+    overflow-x: hidden;
+    max-height: 25vh;
+    font-family: "IBM Plex Mono", monospace !important;
+  }
+}
+::ng-deep .p-progressbar{
+  height: 6px !important;
+}
+::ng-deep .webcam-wrapper video.mirrored{
+  border-radius: 6px !important;
+  border: 1px solid  rgba(128, 31, 255, 0.5);
+  overflow: hidden;
+  // border-image-source: linear-gradient(180deg, rgba(7, 55, 255, 0.5) -46.67%, rgba(128, 31, 255, 0.5) 77.78%);
+}

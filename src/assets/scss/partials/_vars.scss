@@ -1,0 +1,198 @@
+
+$Inter:'Inter';
+$TTNormsPro: 'TT Norms Pro';
+
+//********************** new flow ************************
+//Font
+$Gabarito: "Gabarito", sans-serif;
+$IBM: "IBM Plex Mono", monospace;
+// font-family: "IBM Plex Mono", monospace;
+
+// font weight
+$fw-300: 300;
+$fw-400: 400;
+$fw-500: 500;
+$fw-600: 600;
+$fw-700: 700;
+$fw-800: 800;
+$fw-900: 900;
+
+
+// font size
+$fs-8: 8px;
+$fs-10: 10px;
+$fs-12: 12px;
+$fs-13: 13px;
+$fs-14: 14px;
+$fs-16: 16px;
+$fs-18: 18px;
+$fs-20: 20px;
+$fs-22: 22px;
+$fs-24: 24px;
+$fs-28: 28px;
+$fs-36: 36px;
+
+
+
+$top: top;
+$bottom: bottom;
+$left: left;
+$right: right;
+$center: center;
+$middle: middle;
+$baseline: baseline;
+$text-top: text-top;
+$text-bottom: text-bottom;
+$sub: sub;
+$none: none;
+$justify: justify;
+$normal: normal;
+$nowrap: nowrap;
+$wrap: wrap;
+$wrap-reverse: wrap-reverse;
+
+
+// Text Transform
+$lowercase : lowercase;
+$uppercase : uppercase;
+$capitalize : capitalize;
+
+
+// Text Overflow
+$clip: clip;
+$ellipsis: ellipsis;
+
+
+// Text Decoration
+$underline: underline;
+$line-through: line-through;
+$no-underline: no-underline;
+
+
+// Display
+$block: block;
+$inline: inline;
+$inline-block: inline-block;
+$flex: flex;
+$inline-flex: inline-flex;
+
+
+//Justify Content
+$flex-start: flex-start;
+$flex-end: flex-end; 
+$space-between: space-between;
+$space-around: space-around;
+$space-evenly: space-evenly;
+
+
+//Flex Direction
+$row: row;
+$row-reverse: row-reverse; 
+$column: column; 
+$column-reverse: column-reverse;
+
+
+//Align Items
+$stretch: stretch;
+$flex-start: flex-start;
+$flex-end: flex-end;
+$baseline: baseline;
+
+
+//Position
+$static: static;	
+$fixed: fixed;
+$relative: relative;
+$absolute: absolute;
+$sticky: sticky;
+
+
+//Overflow
+$auto: auto;
+$hidden: hidden;
+$visible: visible;
+$scroll: scroll;
+
+
+//Cursor
+$pointer: pointer;
+
+
+//Text Transform
+$lowercase: lowercase;
+$uppercase: uppercase;
+$capitalize: capitalize;
+
+
+// rem
+$_4: 0.25rem;
+$_6: 0.37rem;
+$_8: 0.5rem;
+$_10: 0.625rem;
+$_12: 0.75rem;
+$_14: 0.87rem;
+$_16: 1rem;
+$_18: 1.12rem;
+$_20: 1.25rem;
+$_22: 1.375rem;
+$_24: 1.5rem;
+$_26: 1.62rem;
+$_28: 1.75rem;
+$_30: 1.87rem;
+$_32: 2rem;
+$_36: 2.25rem;
+$_38: 2.375rem;
+$_42: 2.62rem;
+$_48: 3rem;
+$_50: 3.12rem;
+$_60: 3.75rem;
+$_220: 13.75rem;
+
+
+//Color
+$dusk-gray: #1D243485;
+$deep-twilight: #1D2434B8;
+$nightfall-shadow: #1D24340F;
+$black: #1D2434;
+$blue-soft: #285FF50F;
+$muted-black: #0000001F;
+$foggy-charcoal: #1D24341F;
+$faded-azure: #084BFF1F;
+$white: #ffffff;
+$pale-silver: #F6F6F6;
+$snowfall-white: #FCFCFC;
+$powdered-lavender: #EEF3FF;
+$icy-mist: #F7F9FC;
+$nebula-blue: #081DDA;
+$neon-sky: #0152FF;
+$deep-blue: #084BFF;
+$deep-ocean-blue: #2328C6;
+$cobalt-blue: #004EFF;
+$electric-blue: #084BFFD4;
+$bright-blue: #084BFF78;
+$blue-fog: #084BFF33;
+$hazy-indigo: #084BFF1F;
+$skyline-tint :#0048E21F;
+$fire-red: #C82424;
+$cherry-red: #C62623;
+$rosy-dawn: #FF7A7A;
+$crimson-whisper: #E200001F;
+$stormy-night: #484E5A;
+$phantom-black: #00000040;
+$forest-green: #339F38FA;
+$vibrant-green: #248511;
+$lush-green: #187E14;
+$crystal-fern: #00E2481F;
+$soft-breeze: #F5F9FF;
+$pale-gray: #EDEDED;
+$sugar-plum: #FEFAFF;
+$snow-white: #F9F9F9;
+$golden-harvest: #C67723;
+$lemon-mist: #E2CB001F;
+
+
+// media devices breakpoints
+$desktop: 1280px;
+$laptop: 1024px;
+$tablets: 768px;
+$mobile: 480px;

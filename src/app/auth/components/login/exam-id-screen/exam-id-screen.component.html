@@ -1,0 +1,37 @@
+<!--************ exam-id-screen ******************-->
+<section class="w-full h-full content-flex-center exam-id-screen">
+    <div>
+     <div class="px-42 py-38 shadow-black border-round-16">
+         <p class="text-center mb-18"><figure><img src="../../../../assets/images/supersourcing-logo.svg" alt=""></figure></p>
+         <p class="text-center mb-18"><figure><img src="../../../../assets/images/ai-profile.gif" alt="ai-profile" width="64px" height="64px"></figure></p>
+         <p class="fs-36 fw-600 line-h-42 text-center mb-24">Take <span class="text-gradient"> AI Driven </span> test,  <span class="block"> to Super-charge your careers! </span></p>
+         <form [formGroup]="login" (ngSubmit)="onSubmit()">
+
+         <div class="mt-38">
+            <label class="fs-14 fw-500 line-h-20 text-deep-twilight">Exam ID*</label>  
+            <input formControlName="exam_id" type="text" pInputText placeholder="Enter Your Exam Id" class="w-full email-input mt-8 mb-16  "  [ngClass]="{'dirty invalid focusNone': examIdInvalid == true}"  />
+            <p *ngIf="examIdInvalid == true" class="text-center text-cherry-red fs-14 fw-400 line-h-20 mb-16">Wrong Exam Id entered, Please Check</p>
+
+            <p-button label="Get Started" type="submit" class="get-started-btn mt-16" [disabled]="!login.get('exam_id')?.value"  ></p-button>
+
+         </div>
+         </form>
+         <!-- routerLink="/auth/ai-interview-screen" -->
+         <p class="fw-400 fs-14 line-h-20 text-deep-twilight mt-20 text-center">Any issues with the ID? <a class="fw-700 text-cobalt-blue" routerLink="/auth/resend-id">Click here</a>  to send ID again</p>
+         <div class="content-flex-center mt-28">
+             <p-button label="Contact Us" class="faq-btn me-24 white-nowrap" [outlined]="true" routerLink="/auth/contact-us">
+                <img src="../.../../../../../../assets/images/new-flow/phone-call-icon.svg" alt="phone-call-icon" width="20px" height="20px" class="me-10">
+             </p-button>
+             <p-button label="FAQs" class="faq-btn white-nowrap" [outlined]="true" routerLink="/auth/faq">
+                <img src="../.../../../../../../assets/images/new-flow/seal-question-icon.svg" alt="seal-question-icon" width="20px" height="20px" class="me-10">
+             </p-button>
+         </div>
+        </div>
+        <div class="mt-20 content-flex-center fs-12 fw-500 line-h-20 text-dusk-gray">
+            <p>By continuing, you agree to Supersourcing's <a href="https://supersourcing.com/privacy-policy.html" 
+                class="text-electric-blue" 
+                target="_blank" 
+                rel="noopener noreferrer"class="text-electric-blue" >Terms of Service and Privacy Policy .</a></p>
+         </div>
+     </div>
+ </section>

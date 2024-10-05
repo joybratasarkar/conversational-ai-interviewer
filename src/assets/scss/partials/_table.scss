@@ -1,0 +1,682 @@
+// .developers-list,
+// .available-list,
+// .gotHired-list,
+// .shortscroll,
+// .users {
+//     width: 100% !important;
+//     .mat-elevation-z8,
+//     .mat-mdc-elevation-specific.mat-elevation-z8 {
+//         box-shadow: none !important;
+//     }
+// }
+// .mdc-data-table__cell,
+// .mdc-data-table__header-cell {
+//     padding: 0 !important;
+// }
+// .mat-mdc-tab-label-container {
+//     z-index: 0 !important;
+// }
+// .mat-mdc-card {
+//     box-shadow: none !important;
+//     --mdc-elevated-card-container-color: transparent !important;
+// }
+
+// .mdc-data-table__cell {
+//     font-family: "TT Norms Pro";
+//     font-style: normal;
+//     font-weight: 400;
+//     font-size: 13px;
+//     letter-spacing: -0.2px;
+//     color: #4f5052;
+// }
+
+// .mat-mdc-table {
+//     & .mdc-data-table__header-row {
+//         height: 45px !important;
+//         font-family: $TTNormsPro !important;
+//     }
+//     & .mdc-data-table__row {
+//         height: 70px !important;
+//         font-family: $TTNormsPro !important;
+//     }
+// }
+// .mdc-text-field--disabled {
+//     border: solid 1px rgba(0, 0, 0, 0.42) !important;
+// }
+
+// .searchbox {
+//     min-width: 40% !important;
+//     max-width: 40% !important;
+//     .mdc-button {
+//         position: relative;
+//         min-width: 45px !important;
+//     }
+//     .mat-mdc-form-field {
+//         display: inline !important;
+//     }
+//     .mat-mdc-text-field-wrapper {
+//         background: #f3f2fe !important;
+//     }
+//     &.bg {
+//         .mat-mdc-text-field-wrapper {
+//             background: $white !important;
+//             border-radius: 80px !important;
+//         }
+//     }
+//     &.w-100 {
+//         min-width: 100% !important;
+//         max-width: 100% !important;
+//     }
+//     &.w-75 {
+//         min-width: 75% !important;
+//         max-width: 75% !important;
+//     }
+//     .mat-mdc-form-field-subscript-wrapper {
+//         display: none !important;
+//     }
+// }
+// .users {
+//     &-table {
+//         tr {
+//             th {
+//                 &.mat-column-userName {
+//                     width: 25%;
+//                 }
+//                 &.mat-column-email {
+//                     width: 30%;
+//                     padding-right: 15px !important;
+//                 }
+//                 &.mat-column-mobileNumber {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-status {
+//                     width: 10%;
+//                     text-align: center !important;
+//                 }
+//                 &.mat-column-action {
+//                     text-align: center !important;
+//                     width: 20%;
+//                 }
+//             }
+//             td {
+//                 &.mat-column-userName {
+//                     width: 25%;
+//                 }
+//                 &.mat-column-email {
+//                     width: 30%;
+//                     padding-right: 15px !important;
+//                 }
+//                 &.mat-column-mobileNumber {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-status {
+//                     width: 10%;
+//                     text-align: center !important;
+//                 }
+//                 &.mat-column-action {
+//                     width: 20%;
+//                     text-align: center !important;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// .developers-list {
+//     &-table {
+//         .mat-mdc-form-field-subscript-wrapper {
+//             display: none;
+//         }
+//         .mat-mdc-form-field-infix {
+//             height: 32px !important;
+//             display: flex;
+//             position: relative;
+//             padding: 0 !important;
+//             align-items: center !important;
+//         }
+//         tr {
+//             th {
+//                 &.mat-column-resume {
+//                     width: 8% !important;
+//                 }
+//                 &.mat-column-name {
+//                     width: 15% !important;
+//                     max-width: 135px;
+//                 }
+//                 &.mat-column-role {
+//                     width: 15% !important;
+//                     max-width: 135px;
+//                 }
+//                 &.mat-column-top_skills {
+//                     width: 13% !important;
+//                     max-width: 135px;
+//                 }
+//                 &.mat-column-experience {
+//                     width: 12% !important;
+//                     max-width: 100px;
+//                 }
+//                 &.mat-column-price {
+//                     width: 10% !important;
+//                     max-width: 100px;
+//                 }
+//                 &.mat-column-notice_period {
+//                     width: 5% !important;
+//                     max-width: 100px;
+//                 }
+//                 &.mat-column-action {
+//                     text-align: center !important;
+//                     width: 10% !important;
+//                 }
+//             }
+//             td {
+//                 &.mat-column-resume {
+//                     width: 8% !important;
+//                 }
+//                 &.mat-column-name {
+//                     width: 13% !important;
+//                     max-width: 135px;
+//                 }
+//                 &.mat-column-role {
+//                     width: 15% !important;
+//                     max-width: 135px;
+//                 }
+//                 &.mat-column-top_skills {
+//                     width: 15% !important;
+//                     max-width: 135px;
+//                 }
+//                 &.mat-column-experience {
+//                     width: 12% !important;
+//                     max-width: 100px;
+//                 }
+//                 &.mat-column-price {
+//                     width: 10% !important;
+//                     max-width: 100px;
+//                 }
+//                 &.mat-column-notice_period {
+//                     width: 5% !important;
+//                     max-width: 100px;
+//                 }
+//                 &.mat-column-action {
+//                     width: 10% !important;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// .available-list {
+//     &-table {
+//         tr {
+//             th {
+//                 &.mat-column-resume {
+//                     width: 14%;
+//                 }
+//                 &.mat-column-name {
+//                     width: 16%;
+//                     padding-right: 15px !important;
+//                 }
+//                 &.mat-column-role {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-top_skills {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-experience {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-price {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-action {
+//                     text-align: center !important;
+//                     width: 10%;
+//                 }
+//             }
+//             td {
+//                 &.mat-column-resume {
+//                     width: 14%;
+//                 }
+//                 &.mat-column-name {
+//                     width: 16%;
+//                     padding-right: 15px !important;
+//                 }
+//                 &.mat-column-role {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-top_skills {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-experience {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-price {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-action {
+//                     text-align: center !important;
+//                     width: 10%;
+//                 }
+//             }
+//         }
+//     }
+// }
+// .gotHired-list {
+//     &-table {
+//         tr {
+//             th {
+//                 &.mat-column-name {
+//                     width: 16%;
+//                     padding-right: 15px !important;
+//                 }
+//                 &.mat-column-client {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-role {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-salary {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-duration {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-jobType {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-action {
+//                     text-align: center !important;
+//                     width: 10%;
+//                 }
+//             }
+//             td {
+//                 &.mat-column-name {
+//                     width: 16%;
+//                     padding-right: 15px !important;
+//                 }
+//                 &.mat-column-client {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-role {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-salary {
+//                     width: 15%;
+//                 }
+//                 &.mat-column-duration {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-jobType {
+//                     width: 10%;
+//                 }
+//                 &.mat-column-action {
+//                     text-align: center !important;
+//                     width: 10%;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// .shortscroll {
+//     overflow-y: scroll;
+//     overflow-x: hidden;
+//     width: 100%;
+//     height: 245px;
+//     &::-webkit-scrollbar {
+//         width: 3px;
+//         height: 4px;
+//         border: 1px solid #d5d5d5;
+//     }
+
+//     &::-webkit-scrollbar-track {
+//         border-radius: 12px;
+//         background: #deecff;
+//     }
+
+//     &::-webkit-scrollbar-thumb {
+//         border-radius: 12px;
+//         background: $blue-ribbon;
+//     }
+//     tr.mat-header-row {
+//         height: 56px;
+//         background: $white;
+//         border: 1px solid $white;
+//     }
+//     table.mat-table {
+//         border-spacing: 0;
+//         border: 1px solid $white;
+//         border-radius: 6px;
+//     }
+//     th.mat-header-cell {
+//         padding: 0;
+//         border-bottom-color: $white !important;
+//         border-bottom-style: solid;
+//     }
+// }
+// .mat-mdc-slide-toggle .mdc-switch .mdc-switch__ripple {
+//     height: auto !important;
+//     width: auto !important;
+// }
+// .mat-mdc-slide-toggle .mdc-switch:enabled .mdc-switch__track::before {
+//     background: #44b146 !important;
+// }
+// .mat-mdc-slide-toggle .mdc-switch.mdc-switch--unselected:enabled .mdc-switch__icon {
+//     color: #e2e4e7 !important;
+// }
+// .mat-mdc-slide-toggle .mdc-switch.mdc-switch--selected .mdc-switch__icon,
+// .mat-mdc-slide-toggle .mdc-switch.mdc-switch--unselected .mdc-switch__icon {
+//     width: var(--mdc-switch-unselected-icon-size, 0px) !important;
+//     height: var(--mdc-switch-unselected-icon-size, 0px) !important;
+// }
+// .mat-mdc-slide-toggle .mdc-switch .mdc-switch__track {
+//     border-radius: var(--mdc-switch-track-shape, 18px) !important;
+// }
+// .mat-mdc-slide-toggle .mdc-switch {
+//     width: var(--mdc-switch-track-width, 48px) !important;
+// }
+// .mat-mdc-slide-toggle .mdc-switch .mdc-switch__track {
+//     height: var(--mdc-switch-track-height, 24px) !important;
+// }
+// .mdc-switch--selected .mdc-switch__handle-track {
+//     transform: translateX(80%) !important;
+// }
+// .mat-mdc-slide-toggle .mdc-switch:enabled .mdc-switch__shadow {
+//     box-shadow: none !important;
+// }
+// .mdc-switch__handle {
+//     display: flex;
+//     pointer-events: auto;
+//     position: absolute;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     left: 3px !important;
+//     right: auto;
+// }
+// .mat-mdc-slide-toggle,
+// .mat-mdc-slide-toggle.mat-primary {
+//     --mdc-switch-selected-focus-state-layer-color: #ffffff;
+//     --mdc-switch-selected-handle-color: #ffffff;
+//     --mdc-switch-selected-hover-state-layer-color: #ffffff;
+//     --mdc-switch-selected-pressed-state-layer-color: #ffffff;
+//     --mdc-switch-selected-focus-handle-color: #ffffff;
+//     --mdc-switch-selected-hover-handle-color: #ffffff;
+//     --mdc-switch-selected-pressed-handle-color: #ffffff;
+
+//     --mdc-switch-selected-focus-track-color: #44b146;
+//     --mdc-switch-selected-hover-track-color: #44b146;
+//     --mdc-switch-selected-pressed-track-color: #44b146;
+//     --mdc-switch-selected-track-color: #44b146;
+// }
+
+// .mat-user-icon button mat-icon {
+//     height: inherit !important;
+// }
+
+// .mat-raised-button {
+//     font-family: "TT Norms Pro" !important;
+//     font-style: normal;
+//     font-weight: 500;
+//     font-size: 14px;
+//     line-height: 17px;
+//     border-radius: 4px;
+//     padding: 16px 0px;
+//     width: fit-content;
+//     &-outline {
+//         background: #fff;
+//         border: solid 1px #0b69ff;
+//     }
+// }
+
+// .mat-button {
+//     font-family: "TT Norms Pro" !important;
+//     font-style: normal;
+//     font-weight: 500;
+//     font-size: 14px;
+//     line-height: 17px;
+//     border-radius: 4px;
+//     padding: 16px 0px;
+//     width: fit-content;
+//     &-outline {
+//         background: #0b69ff;
+//         border: 1px solid rgba(235, 243, 250, 0.89);
+//     }
+//     &-white {
+//         border: 1px solid rgba(235, 243, 250, 0.89);
+//     }
+// }
+
+// .mat-mdc-tab-header {
+//     --mdc-secondary-navigation-tab-container-height: 61px !important;
+// }
+
+// ul.ul-list {
+//     margin: 0px;
+//     padding-left: 20px;
+//     list-style-type: none;
+//     li {
+//         position: relative;
+//         &:before {
+//             content: "";
+//             padding: 4px;
+//             position: absolute;
+//             left: -17px;
+//             background-color: #d9d9d9;
+//             top: 8px;
+//             border-radius: 100%;
+//         }
+//     }
+// }
+// ul{
+//     &.blue-pointer {
+//         margin: 0px;
+//         padding-left: 20px;
+//         list-style-type: none;
+//         li {
+//             font-size: 18px;
+//             font-weight: 500;
+//             line-height: 22px;
+//             margin-bottom: 16px;
+//             position: relative;
+//             &:before {
+//                 content: "";
+//                 padding: 4px;
+//                 position: absolute;
+//                 left: -17px;
+//                 background-color: #0062FF;
+//                 top: 7px;
+//                 border-radius: 100%;
+//             }
+//         }
+//     }
+// }
+// .instructions{
+//     position: absolute;
+//     bottom: 20px;
+//     margin: 0 auto;
+//     button{
+//         border: none !important;
+//         border-radius: 12px !important;
+//         background: rgba(11, 105, 255, 0.4);
+//         padding: 15px 30px;
+//         cursor: pointer;
+//         span{
+//             border-radius: 100%;
+//             background: #ffffff;
+//             padding: 12px 2px 13px 10px;
+//         }
+//     }
+// }
+// .video-instruction{
+//     position: absolute;
+//     // left: -110px;
+//     left: -227px !important;
+//     bottom: 0px;
+// }
+// .video-instruction img{
+//     height: 108px;
+//     width: 108px;
+//     border-radius: 122px ;
+// }
+// .video-instruction video{
+//     height: 200px;
+//     width: 200px;
+//     object-fit: cover !important;
+//     border-radius: 50%;
+// }
+// .video-instruction mat-icon{
+//     position: absolute;
+//     right: 185px;
+//     top: 12px;
+// }
+// .timer{
+//     position: absolute;
+//     right: -122px;
+//     top: 0px;
+//     background: #ffffff;
+//     border-radius: 10px;
+//     padding: 10px;
+// }
+// .min-max-w{
+//     min-width: 12%;
+//     max-width: 14%;
+// }
+// .listing-circle {
+//     ul {
+//         list-style: circle;
+
+//         li {
+//             line-height: 24px !important;
+
+//             &::marker {
+//                 font-size: 18px;
+//                 color: $light-green;
+//             }
+//         }
+//     }
+// }
+
+// .mat-back {
+//     position: absolute;
+//     left: -54px;
+//     top: 10px;
+//     @media (max-width: 1280px) {
+//         display: none;
+//     }
+// }
+// .custom-listing {
+//     border: none !important;
+//     background-color: transparent;
+//     border-spacing: 0px 12px !important;
+//     tr {
+//         margin-bottom: 20px;
+//         td {
+//             padding-left: 0px !important;
+//         }
+//     }
+
+//     p {
+//         margin: 0px;
+//     }
+//     .jobs-item-status {
+//         display: flex;
+//         justify-content: space-around;
+//         align-items: stretch;
+//         .jis-child {
+//             padding: 25px 0px;
+//             width: 100%;
+//             border-right: solid 1px #e2e4e7;
+//             border-top: solid 1px #e2e4e7;
+//             border-bottom: solid 1px #e2e4e7;
+//             transition-duration: 300ms;
+//             display: grid;
+//             align-items: center;
+//             align-content: center;
+//             text-decoration: none;
+//             &:last-child {
+//                 border-right: none;
+//             }
+//             &.isTbas {
+//                 cursor: pointer;
+//                 &.active {
+//                     background-color: #ecf3ff;
+//                     border-bottom-color: $blue-ribbon;
+//                 }
+//                 &:hover {
+//                     background-color: #ecf3ff82;
+//                     border-bottom-color: #0062ff94;
+//                 }
+//             }
+//         }
+//     }
+// }
+// .checkAllSkillsCount {
+//     position: relative;
+//     &:hover {
+//         .checkAllSkills {
+//             display: block !important;
+//             z-index: 9999 !important;
+//         }
+//     }
+//     .checkAllSkills {
+//         display: none;
+//         position: absolute;
+//         right: -100%;
+//         top: 40px;
+//         border: inherit;
+//         background-color: #fbfbff;
+//         // padding: 10px 5px;
+//         min-width: 150px;
+//         z-index: 1;
+//         border-radius: 6px;
+//         &::before {
+//             content: "";
+//             position: absolute;
+//             right: 60px;
+//             top: -7px;
+//             padding: 6px;
+//             transform: rotate(45deg);
+//             border-top: inherit;
+//             border-left: inherit;
+//             background-color: inherit;
+//         }
+//         span {
+//             display: block;
+//         }
+//         & > span:nth-child(1),
+//         & > span:nth-child(2) {
+//             display: none;
+//         }
+//     }
+// }
+
+// // slills tooltip
+// ul.skill-menu {
+//     margin: 0 0 0 -40px;
+//     display: flex;
+//     list-style: none;
+// }
+// li.skilldown:hover {
+//     cursor: pointer;
+//     .skilldown-more {
+//         visibility: visible;
+//         opacity: 1;
+//         display: block;
+//     }
+// }
+// ul li ul.skilldown-more {
+//     opacity: 0;
+//     list-style: none;
+//     margin: 8px 0 0 0;
+//     padding: 0px;
+//     visibility: hidden;
+//     position: absolute;
+//     background: $white;
+//     transition: all 0.5s ease;
+//     height: fit-content;
+//     max-height: 56px;
+//     overflow-x: hidden;
+//     overflow-y: scroll;
+// }
+// ul li ul.skilldown-more li {
+//     clear: both;
+// }

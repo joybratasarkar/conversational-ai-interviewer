@@ -1,0 +1,141 @@
+.exam-id-screen{
+     .p-inputtext {
+        padding: 12px 20px !important;
+        border-radius: 12px !important;
+        border: 1px solid #1D24341F !important;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 24px;
+        font-family: gabarito !important;
+    }
+    .get-started-btn .p-button{
+        width: 100% !important;
+        padding: 14px 20px!important;
+        border-radius: 50px !important;
+        background-color: #0152FF !important;
+        font-family: gabarito !important;
+        .p-button-label{
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            line-height: 24px !important;
+        }
+    }
+
+    .faq-btn .p-button{
+        padding: 14px 80px!important;
+        border: 1px solid #1D24341F !important;
+        border-radius: 12px !important;
+        font-family: gabarito !important;
+        .p-button-label{
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            line-height: 24px !important;
+            color: #1D2434 !important;
+        }
+    }
+}
+
+
+.contact-us-screen{
+     .p-inputtext {
+        padding: 12px 20px !important;
+        border-radius: 12px !important;
+        border: 1px solid #1D24341F !important;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+        font-family: gabarito !important;
+        color: #1D2434 !important;
+    }
+    .back-btn .p-button{
+        width: 100% !important;
+        padding: 6px 24px!important;
+        border-radius: 50px !important;
+        background-color: #FFF !important;
+        font-family: gabarito !important;
+        .p-button-label{
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            line-height: 16px !important;
+        }
+    }
+    .send-btn .p-button{
+        width: 100% !important;
+        padding: 14px 20px!important;
+        border-radius: 50px !important;
+        background-color: #0152FF !important;
+        color: #fff !important;
+        font-family: gabarito !important;
+        .p-button-label{
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            line-height: 24px !important;
+        }
+    }
+}
+
+
+.faq-screen{
+    .faq-accordion .p-accordion .p-accordion-header .p-accordion-header-link{
+        border: 1px solid #1D243414 !important;
+        // border-bottom: none !important;
+        background-color: #ffffff !important;
+        color: #1D2434 !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 22px !important;
+        padding: 16px  16px 8px 16px!important; 
+        font-family: gabarito !important;
+        .p-accordion-toggle-icon{
+            position: absolute;
+            right: 8px;
+        }
+    }
+    .p-accordion p-accordiontab .p-accordion-tab{
+        margin-bottom: 8px;
+    }
+}
+
+
+.resend-id-screen{
+     .p-inputtext {
+        padding: 12px 20px !important;
+        border-radius: 12px !important;
+        border: 1px solid #1D24341F !important;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+        font-family: gabarito !important;
+    }
+    .check-send-btn .p-button{
+        width: 100% !important;
+        padding: 14px 20px!important;
+        border-radius: 50px !important;
+        background-color: #0152FF !important;
+        font-family: gabarito !important;
+        .p-button-label{
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            line-height: 24px !important;
+        }
+    }
+}
+
+
+
+.back-btn .p-button{
+    padding: 6px 24px!important;
+    border-radius: 80px !important;
+    background-color: #ffffff !important;
+    font-family: gabarito !important;
+    .p-button-label{
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        line-height: 16px !important;
+    }
+}
+.prnt-content{
+    width: 570px !important;
+}
+
+

@@ -1,0 +1,83 @@
+<section class="p-38 h-cal-100px bg-icy-mist">
+    <div class="instructions-screen border-round-24 border-gray">
+        <div class="p-38 ">
+           <span class="text-gradient fw-600 fs-28 line-h-36 ">Important Instructions!</span>
+           <div class="border-round-12 p-8 border-muted-black mt-16 bg-sugar-plum">
+
+               <div class="p-16 border-round-10 border-hazy-indigo bg-white mb-8">
+                   <p class="mb-16 flex align-center text-deep-blue fw-600 fs-16 line-h-20">
+                    <img src="../../../../assets/images/new-flow/lightning-blue-icon.svg" alt="lightning-blue-icon" width="20px" height="20px" class="me-4">
+                    Here are a few tips to increase your success rate :
+                   </p>
+                   <ul class="ms-4 text-deep-twilight list-none fs-14 fw-400 line-h-18">
+                       <li class="mb-8 flex align-center">
+                        <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span>Make sure you are in a quiet, distraction-free area and hold <span class="block"> eye contact with the camera. </span></span>
+                       </li>
+                       <li class="mb-8 flex align-center">
+                        <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span>Last but not least, take it easy. We are with you in this</span>
+                       </li>
+                       <li class="mb-8 flex align-center">
+                        <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span>Last but not least, take it easy. We are with you in this</span>
+                       </li>
+                       <li class="mb-8 flex align-center">
+                         <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span> Make sure you're free for the next 20 minutes as you can't pause in <span class="block"> between </span> </span>
+                        </li>
+                       <li class="flex align-center">
+                        <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span>Try our practice environment to get comfortable with the flow.</span>
+                       </li>
+                   </ul>
+               </div>
+               <div class="p-16 border-round-10 border-hazy-indigo bg-white">
+                   <p class="mb-16 flex align-center text-rosy-dawn fw-600 fs-16 line-h-20">
+                    <img src="../../../../assets/images/new-flow/shield-red-icon.svg" alt="shield-red-icon" width="20px" height="20px" class="me-4">
+                    Our proctoring steps for ensuring a violation-free screening :
+                   </p>
+                   <ul class="ms-4 text-deep-twilight list-none fs-14 fw-400 line-h-18">
+                       <li class="mb-8 flex align-center">
+                         <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span> Make sure you are in a quiet, distraction-free area and hold eye contact with the <span class="block"> camera. </span> </span>
+                        </li>
+                       <li class="mb-8 flex align-center">
+                         <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span> Ensures there are no multiple screens connected to your primary device. </span>
+                        </li>
+                       <li class="mb-8 flex align-center">
+                         <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span> Tracking refreshes, change of tabs or window during the screening </span>
+                        </li>
+                       <li class="mb-8 flex align-center">
+                         <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span> Monitor any suspicious eye and body movements, along with any external sounds <span class="block"> besides your own </span> </span>
+                        </li>
+                       <li class="flex align-center">
+                        <img src="../.../../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
+                        <span>Please ensure that your face, hands, and desk are clearly visible during the <span class="block"> assessment. Aim to have more than half of your body in view on camera </span></span>
+                       </li>
+                   </ul>
+               </div>
+       
+           </div>
+        </div>
+        <div class="p-38 bg-white border-round-24-left-corner border-left-foggy-charcoal relative">
+           <p class="fw-600 fs-28 line-h-28 pb-8 mb-24 border-bottom-muted-black">👋️ Welcome, <span class="text-gradient">{{userFirstName |titlecase}}</span></p>
+           <p class="fw-500 fs-24 line-h-36 text-black">Let's get started</p>
+           <p class="fw-400 fs-16 line-h-22 mt-8 text-deep-twilight mb-28">This screening will cover your communication skills as well as your 
+               <span class="block">technical skills for the role of  <span class="fw-600 text-black">'Full Stack Web Developer'</span></span>
+           </p>
+           <div class="p-10 border-blue-fog bg-soft-breeze border-round-12">
+              <p class="mb-8"><span class="text-gradient fw-600 fs-28 line-h-36"> 30mins</span></p>
+              <p class="mb-8 text-deep-twilight fw-400 fs-14 line-h-20">Section 1</p>
+              <p class="mb-8"> <span class="text-gradient fw-600 fs-28 line-h-36"> Technical Test</span></p>
+              <p class="content-flex text-deep-twilight fw-400 fs-16 line-h-20"><span>4 Questions</span> <span>3 mins each</span></p>
+           </div>
+           <!-- <p-button label="Start Interview" class="start-interview-btn" ></p-button> -->
+           <p-button label="Start Interview" (click)="startInterview()" class="start-interview-btn"></p-button>
+
+        </div>
+       </div>
+</section>

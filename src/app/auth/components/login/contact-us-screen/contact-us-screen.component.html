@@ -1,0 +1,54 @@
+<!--************ contact-us-screen ******************-->
+<section class="w-full h-full content-flex-center contact-us-screen"><!--************ contact-us-screen ******************-->
+    <section class="w-full h-full content-flex-center contact-us-screen">
+        <div class="prnt-content">
+            <div class="px-42 py-38 shadow-black border-round-16">
+                <p class="mb-28 content-flex">
+                    <figure><img src="../../../../assets/images/supersourcing-logo.svg" alt=""></figure>
+                    <p-button label="Back" class="back-btn" [outlined]="true" routerLink="/auth/login"></p-button>
+                </p>
+                <p class="fs-18 fw-500 line-h-24 mb-28 pb-14 border-bottom-foggy-charcoal text-black flex align-center">
+                    <img src="../.../../../../../../assets/images/new-flow/phone-call-icon.svg" alt="phone-call-icon" width="16px" height="16px" class="me-10">
+                    Contact Us 
+                </p>
+                <p class="fs-20 fw-600 line-h-24 mb-24"> Write to us we’ll get back to you with. </p>
+                <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
+                    <div class="mt-28">
+                        <label class="fs-14 fw-500 line-h-20 text-deep-twilight">Email ID*</label>  
+                        <input formControlName="email" type="text" pInputText placeholder="Enter your Email ID" 
+                               class="w-full email-input mt-8 mb-16" 
+                                [ngClass]="{'dirty invalid focusNone': 
+                                (contactUsForm.get('email')?.errors?.['required'] && contactUsForm.get('email')?.touched) || 
+                                (contactUsForm.get('email')?.errors?.['pattern'])}"/>
+                        <p  class="text-center  text-cherry-red fs-14 fw-400 line-h-20 mb-16">
+                            <span *ngIf=" (contactUsForm.get('email')?.errors?.['required'] && contactUsForm.get('email')?.touched)">
+                                Email ID is required.
+                            </span>
+                            <span *ngIf="contactUsForm.get('email')?.errors?.['pattern']">
+                                Please enter a valid email ID.
+                            </span>
+                        </p>
+                    </div>
+                
+                    <div>
+                        <label class="fs-14 fw-500 line-h-20 text-dusk-gray">State the issue/problem/feedback</label>
+                        <textarea formControlName="issue" rows="5" cols="47" class="block mt-8 mb-16" pInputTextarea 
+                                  placeholder="Write to us here" 
+                                  [ngClass]="{'dirty invalid focusNone': issueInvalid}"></textarea>
+                        <p *ngIf="issueInvalid" class="text-center text-cherry-red fs-14 fw-400 line-h-20 mb-16">
+                            This field is required.
+                        </p>
+                        <p-button label="Send" type="submit" class="send-btn" [disabled]="!contactUsForm.valid" [outlined]="true"></p-button>
+                    </div>
+                </form>
+                
+            </div>
+            <div class="mt-20 content-flex-center fs-12 fw-500 line-h-20 text-dusk-gray">
+                <p>By continuing, you agree to Supersourcing's <a href="https://supersourcing.com/privacy-policy.html" 
+                    class="text-electric-blue" 
+                    target="_blank" 
+                    rel="noopener noreferrer" class="text-electric-blue"> Terms of Service and Privacy Policy.</a></p>
+            </div>
+        </div>
+    </section>
+    

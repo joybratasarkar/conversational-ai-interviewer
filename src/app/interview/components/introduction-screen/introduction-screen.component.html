@@ -1,0 +1,108 @@
+<div class="main-content">
+    <div class="wrapper-1170">
+
+        <div class="row" *ngIf="!instructions">
+            <p class="fs-20 fw-500 my-3 d-flex align-content-center">
+                <img src="../../../../assets/images/camera-blue-icon.svg" class="me-2" alt="camera">
+                Please take your picture before attending the interview
+            </p>
+            <div class="col-12 col-md-8 col-sm-12">
+                <div
+                    class="bg-black border-radius-12 h-70 position-relative d-flex justify-content-center overflow-hidden px-4">
+                    <webcam class="custom-webcam" [height]="1000" [width]="500" [trigger]="triggerObservable"
+                        (imageCapture)="handleImage($event)" *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch"
+                        [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
+                        (initError)="handleInitError($event)"></webcam>
+                    <!-- <img src="../../../../assets/images/online-instructions.svg" alt="online instructions"> -->
+                    <div class="instructions">
+                        <button (click)="triggerSnapshot()">
+                            <span><img src="../../../../assets/images/camera-red-icon.svg" class="me-2"
+                                    alt="camera"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4 col-sm-12">
+
+<!-- Profile Score -->
+<div class="profile-score-box">
+    <div class="mb-3 position-relative bg-white shadow-hover border-radius-10 overflow-hidden px-4 pb-4 pt-3">
+        <div class="position-relative overflow-hidden max-width-300 mx-auto">
+            <img src="assets/images/profiescore-milometer.svg" class="score-label-img" width="100%" alt="">
+            <p class="score-count fs-15 fw-500"><span class="fs-16 fw-600">{{this.profileScore }}</span>/100</p>
+            <span class="score-indicator" [ngStyle]="{'transform': 'rotate(calc(180deg'+'/100 *'+this.profileScore +'))'}"
+            ></span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-2 px-2 max-width-300 mx-auto">
+            <span class="fs-14 fw-500 color-oslo-grey">0</span>
+            <span class="fs-13 fw-600">Internet Speed</span>
+            <span class="fs-14 fw-500 color-oslo-grey">100</span>
+        </div>
+        <p class="fs-14 fw-400 line-height-20 text-center mt-2">Complete your profile, get a higher Score & get hired faster</p>
+    </div>
+</div>
+<!-- h-60 -->
+                <div
+                    class="bg-white border-radius-12 overflow-hidden p-4  border-bottom-left-none border-bottom-right-none">
+                    <p class="fs-26 fw-500 d-flex align-items-center">
+                        <img src="../../../../assets/images/manual-book-icon.svg" class="me-2" alt="camera">
+                        Interview Instructions
+                    </p>
+                    <ul class="blue-pointer pt-4">
+                        <li class="fs-16 fw-400"><span class="fw-700">One Try:</span> Complete it in one go.</li>
+                        <li class="fs-16 fw-400"><span class="fw-700">No Help:</span> Don’t switch tabs or Google, the system detects and rejects automatically.</li>
+                        <li class="fs-16 fw-400"><span class="fw-700">Quiet Place:</span> Make sure it's silent. We'll check the background voice.</li>
+                        <li class="fs-16 fw-400"><span class="fw-700">Be Real:</span> We'll take random photos and videos. Just be you.</li>
+                        <li class="fs-16 fw-400"><span class="fw-700">Speak Clearly:</span> Talk slowly, use good headphones.</li>
+                        <li class="fs-16 fw-400"><span class="fw-700">English Only:</span> The interview is in English.</li>
+                    </ul>
+
+                </div>
+                <div class="text-center bg-solitude border-radius-12  border-top-left-none border-top-right-none">
+                    <p class="fs-18 fw-500 py-4">All the best! 👍</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="instructions">
+            <div class="col-12 col-md-12 col-sm-12 position-relative">
+                <div class="bg-white border-radius-12 p-4">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button mat-button (click)="takeAgainScreenShot()"
+                            class="fs-14 fw-500 color-black bg-pale-yellow cursor-pointer border-radius-20 px-4 py-2 ms-2 me-2 mdc-button mat-unthemed mat-mdc-button-base">Retake</button>
+                        <button mat-button (click)="saveAndCapture()"
+                            class="bg-dodger-blue border-radius-80 d-flex align-items-center justify-content-center  cursor-pointer color-white border-none w-15  fs-14 fw-500 mdc-button mat-unthemed mat-mdc-button-base">
+                            <!-- <span class="d-flex align-items-center">
+                                <span [ngClass]="{'opacity-50': showSpinner$ | async}" class="me-1">Save & Continue</span>
+
+                                <span class="position-relative" *ngIf="showSpinner$ | async">
+                                    <mat-spinner mode="indeterminate" [diameter]="25"></mat-spinner>
+                                    <div id="loading"></div>
+                                </span>
+                            </span> -->
+                            <span class="d-flex align-items-center text-center">
+                                <ng-container *ngIf="(showSpinner$ | async) ; else showQuestionManu">
+                                    <span class="position-relative">
+                                        <!-- <mat-spinner mode="indeterminate" [diameter]="20"></mat-spinner> -->
+                                        <div id="loading"></div>
+                                    </span>
+                            </ng-container>
+                            <ng-template #showQuestionManu>
+                                <span class="cursor-pointer text-center white-space-nowrap">
+                                    Save & Continue
+                                </span>
+                            </ng-template>
+                            </span>
+                        </button>
+
+                    </div>
+                    <div class="bg-black border-radius-12 h-70 d-flex justify-content-center overflow-hidden px-4">
+                        <!-- <img src="../../../../assets/images/online-instructions.svg" alt="online instructions"> -->
+                        <img [src]="webcamImage.imageAsDataUrl" class="me-2" alt="camera">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

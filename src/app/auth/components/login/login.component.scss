@@ -1,0 +1,12 @@
+.interview-screen{
+    display: grid;
+    grid-template-columns: 25% 75%;
+    gap: 24px;
+}
+
+::ng-deep .webcam-wrapper video.mirrored{
+    border-radius: 6px !important;
+    border: 1px solid  rgba(128, 31, 255, 0.5);
+    overflow: hidden;
+    // border-image-source: linear-gradient(180deg, rgba(7, 55, 255, 0.5) -46.67%, rgba(128, 31, 255, 0.5) 77.78%);
+}

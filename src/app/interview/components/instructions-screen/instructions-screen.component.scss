@@ -1,0 +1,56 @@
+.instructions-screen{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .bg-animation {
+        background: linear-gradient(-45deg, #F9FBFF, #084BFF);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    
+}
+    ::ng-deep .start-interview-btn .p-button{
+        position: absolute;
+        bottom: 0px;
+        width: 92%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 14px 24px;
+        border-radius: 50px;
+        background-color: #0152FF;
+        color: #ffffff;
+        margin-bottom: 50px;
+        
+    }
+}
+
+
+ // .gradient-background {
+        //     background: linear-gradient(350deg,#084bff,#f9fbff);
+        //     background-size: 120% 120%;
+        //     animation: gradient-animation 2s ease infinite;
+        //   }
+          
+        //   @keyframes gradient-animation {
+        //     0% {
+        //       background-position: 0% 50%;
+        //     }
+        //     50% {
+        //       background-position: 100% 50%;
+        //     }
+        //     100% {
+        //       background-position: 0% 50%;
+        //     }
+        //   }
+        // }

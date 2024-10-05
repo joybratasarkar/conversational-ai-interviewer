@@ -1,0 +1,65 @@
+// // for component width height
+// @mixin size($width, $height) {
+//     width: $width;
+//     height: $height;
+// }
+
+// // for component same width height
+// @mixin square($width, $height: $width) {
+//     width: $width;
+//     height: $height;
+// }
+
+// @mixin bordered($color, $width) {
+//     border: $width solid $color;
+// }
+
+// @mixin border-radius($radius) {
+//     -webkit-border-radius: $radius;
+//        -moz-border-radius: $radius;
+//         -ms-border-radius: $radius;
+//             border-radius: $radius;
+// }
+
+// /* element position mixin */
+// @mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+//     position: $position;
+//     top: $top;
+//     right: $right;
+//     bottom: $bottom;
+//     left: $left;
+// }
+
+
+@mixin bordered($color, $width) {
+    border: $width solid $color;
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+            border-radius: $radius;
+}
+
+/* element position mixin */
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+// Define a mixin for the gradient text effect
+@mixin gradient-text($angle, $color1, $color2, $color1-stop: 0%, $color2-stop: 100%) {
+    background: linear-gradient($angle, $color1 $color1-stop, $color2 $color2-stop);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+// Mixin for border style
+@mixin border($color, $width) {
+    border: $width solid $color;
+  }

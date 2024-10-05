@@ -1,0 +1,171 @@
+// .mat-mdc-icon-button.mat-mdc-button-base {
+//     --mdc-icon-button-state-layer-size: 38px !important;
+//     padding: 7px !important;
+//     margin-right: 4px !important;
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//     padding: 6px;
+//     padding-bottom: 10px;
+//     font-size: $font-size-xss;
+//     line-height: 20px;
+// }
+
+// mat-form-field{
+//     .mat-mdc-text-field-wrapper{
+//         background-color: transparent !important;
+//         border: 1px solid #CFD1D4 !important; 
+//         border-radius: 6px;
+//     }
+//     .mdc-line-ripple{
+//         &::before{
+//             content: none !important;
+//         }
+//     }
+//     .mat-mdc-form-field-infix{
+//         min-height: auto;
+//         padding-top: 14px !important;
+//         padding-bottom: 14px !important;
+//     }
+//     .mat-mdc-form-field-focus-overlay{
+//         background-color:initial !important;
+//     }
+// }
+// .jobPost{
+    
+//     mat-label{
+//         color: #4F5052;
+//         font-family: TT Norms Pro;
+//         font-size: 14px;
+//         font-style: normal;
+//         font-weight: 400;
+//         line-height: normal;
+//     }
+//     mat-form-field{
+//         .mat-mdc-text-field-wrapper{
+//             background-color: transparent !important;
+//             border: 1px solid #CFD1D4 !important; 
+//             border-radius: 6px;
+//             margin-top: 8px;
+//         }
+//         .mdc-line-ripple{
+//             &::before{
+//                 content: none !important;
+//             }
+//         }
+//         .mat-mdc-form-field-infix{
+//             min-height: auto;
+//             padding-top: 9px !important;
+//             padding-bottom: 9px !important;
+//             &.multipleSkill{
+//                 padding-bottom: 4px !important;
+//             }
+//         }
+//         .mat-mdc-form-field-focus-overlay{
+//             background-color:initial !important;
+//         }
+//     }
+// }
+// .mat-expansion-panel-body {
+//     padding: 0 !important;
+// }
+
+// .input-has-icon-start {
+//     position: relative;
+//     &.short-text{
+//         .input {
+//             padding-right: 10px !important;
+//         }
+//     }
+//     .input {
+//         padding-left: 45px !important;
+//         padding-right: 90px !important;
+//     }
+//     .input-img {
+//         position: absolute;
+//         top: 10px;
+//         left: 10px;
+//     }
+//     button{
+//         &.btn-linkedIn{
+//             position: absolute;
+//             right: 0px;
+//             margin: 4px;
+//             max-height: 42px;
+//         }
+//     }
+// }
+// .input-has-icon-end {
+//     position: relative;
+//     .input {
+//         padding-right: 45px !important;
+//     }
+//     .input-img {
+//         position: absolute;
+//         top: 10px;
+//         right: 10px;
+//     }
+// }
+
+// .form-submit{
+//     position: fixed;
+//     bottom: 0;
+//     background: #FFF;
+//     padding: 16px 0;
+//     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.06);
+//     z-index: 9999999;
+// }
+// /* custom mat tab */ 
+// .custom-mat-tab{
+//     .mat-mdc-tab-list {
+//       .mat-mdc-tab.mdc-tab {
+//         height: 61px !important;
+//         font-family: $TTNormsPro !important;
+//         margin: 0 10px 0 0 !important;
+//         background: #FFF;
+//         box-shadow: 0px 3px 7px 0px rgba(30, 46, 104, 0.02);
+//       }
+//       .mat-mdc-tab .mdc-tab__text-label{
+//         font-weight: 500;
+//         line-height: 24px; 
+//         font-size: 14px;
+//             img {
+//                 filter: sepia(1);
+//             }
+//         }
+//     }
+// }
+// .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+//     color: #0B69FF !important;
+//     font-style: normal;
+//     font-weight: 500;
+//     line-height: 24px; 
+//     font-size: 14px;
+//     img {
+//         filter: invert(0);
+//     }
+// }
+
+// .form-card {
+//     padding: 50px 167px !important;
+//     border: 1px solid #E2E2E2;
+//     border-radius: 10px !important;
+//   }
+
+// mat-chip-list {
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: wrap;
+//     align-items: center;
+//     margin: 0;
+// }
+// .multiple-select{
+//   .mat-chip.mat-standard-chip {
+//     color: #515457;
+//     background: #F0F5F9;
+//     border: 1px solid #E0E5E9;
+//     border-radius: 9px;
+//     font-size: 13px;
+//     font-weight: 400;
+//   }
+// }

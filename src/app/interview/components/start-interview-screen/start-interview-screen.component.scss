@@ -1,0 +1,129 @@
+@keyframes quiet {
+    25%{
+      transform: scaleY(.6);
+    }
+    50%{
+      transform: scaleY(.4);
+    }
+    75%{
+      transform: scaleY(.8);
+    }
+  }
+  
+  @keyframes normal {
+    25%{
+      transform: scaleY(1);
+    }
+    50%{
+      transform: scaleY(.4);
+    }
+    75%{
+      transform: scaleY(.6);
+    }
+  }
+  @keyframes loud {
+    25%{
+      transform: scaleY(1);
+    }
+    50%{
+      transform: scaleY(.4);
+    }
+    75%{
+      transform: scaleY(1.2);
+    }
+  }
+  body{
+    display: flex;
+    justify-content: center;
+    background: black;
+    margin: 0;padding: 0;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .boxContainer{
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+    min-width: 245px;
+    --boxSize: 1.4px;
+    --gutter: 4px;
+    width: calc((var(--boxSize) + var(--gutter)) * 12);
+  }
+  
+  .box{
+    transform: scaleY(.4);
+    height: 100%;
+    width: var(--boxSize);
+    background: rgba(0, 109, 249, 1);
+    animation-duration: 1.2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    border-radius: 8px;
+  }
+  
+  .box1{
+    animation-name: quiet;
+  }
+  
+  .box2{
+    animation-name: normal;
+  }
+  
+  .box3{
+    animation-name: quiet;
+  }
+  
+  .box4{
+    animation-name: loud;
+  }
+  
+  .box5{
+    animation-name: quiet;
+  }
+
+  .skeleton{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    width: 98%;
+    &-left{
+      width: 48%;
+    }
+    &-right {
+      width: 48%;
+      align-self: flex-end;
+    }
+
+  }
+  
+// .item {
+//   width: auto;
+//   height: auto;
+//   margin: 10px auto;
+//   padding: 10px;
+// }
+
+.ellipsis-loader {
+  font-size: 24px;
+  display: inline-block;
+  animation: fadeIn 1s  infinite alternate;
+}
+.ellipsis-loader-dot {
+  font-size: 24px;
+  display: inline-block;
+  animation: fadeIn 1s 0.5s infinite alternate;
+}
+.ellipsis-loader-dots {
+  font-size: 24px;
+  display: inline-block;
+  animation: fadeIn 1s 1s infinite alternate;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

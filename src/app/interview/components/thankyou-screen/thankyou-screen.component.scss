@@ -1,0 +1,101 @@
+// .counter-num {
+//     color: #000000;
+//     height: 40vh;
+//     width: 17vw;
+//     position: relative;
+//     counter-reset: my-count 5;
+//     animation: countdown 5000ms linear;
+
+//     &::after {
+//         content: counter(my-count);
+//         position: absolute;
+//         top: 7rem;
+//         left: 3rem;
+//         font-size: 18em;
+//     }
+// }
+
+// @keyframes countdown {
+//     0% {
+//         counter-increment: my-count -0;
+//     }
+//     25% {
+//         counter-increment: my-count -1;
+//     }
+//     50% {
+//         counter-increment: my-count -2;
+//     }
+//     75% {
+//         counter-increment: my-count -3;
+//     }
+//     100% {
+//         counter-increment: my-count -4;
+//     }
+// }
+
+
+
+
+.thank-u-sreen{
+    
+    .thank-u-img-section{
+        position: relative;
+        overflow: hidden;
+    &::after{
+        content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-image: url(../../../../assets/images/new-flow/thank-u-screen-pattern.svg);
+      width: 250px;
+      height: 250px;
+      background-repeat: no-repeat;
+    }
+    &::before{
+     content: '';
+      position: absolute;
+      bottom: -50px;
+      left: -20px;
+      background-image: url(../../../../assets/images/new-flow/thank-u-screen-pattern.svg);
+      width: 250px;
+      height: 260px;
+      background-repeat: no-repeat;
+    }
+}
+::ng-deep .p-button{
+    padding: 14px 52px 14px 52px;
+    gap: 10px;
+    border-radius: 50px;
+    position: relative;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    font-family: gabarito;
+    color: #FFFFFF  ;
+    img{
+        position: absolute;
+        right: 20px;
+    }
+}
+}
+
+
+// .thank-u-img-section{
+//     background-color: #FFFFFF;
+// 	background: linear-gradient(-45deg, #CCE2ED , #fff) ;
+// 	background-size: 90% 100%;
+// 	animation: gradient 3s ease infinite;
+// 
+// }
+
+// @keyframes gradient {
+// 	0% {
+// 		background-position: 0% 50%;
+// 	}
+// 	50% {
+// 		background-position: 100% 50%;
+// 	}
+// 	100% {
+// 		background-position: 0% 50%;
+// 	}
+// }
