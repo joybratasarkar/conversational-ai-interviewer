@@ -11,13 +11,19 @@ export class InstructionService {
 
   jobV2 = environment.job_interaction_base_url_V2;
   ss_ai = environment.ss_ai; 
-
+ 
 
   constructor(
     // private _utility : UtilityService,
     private _http: HttpClient,
   ) { }
+  uploadResumeAndStartInterview(Resume:File)
+  {
+    return this._http.post(`http://localhost:8000/upload_resume/`, Resume).pipe(timeout(75000), catchError((error: HttpErrorResponse) => {
+      throw error;
+    }));
 
+  }
 
   saveProfilePicAiInterview(id?:string,engineer_id?:string,payload?:any): Observable<any>{
     // return this._http.post(`${this.jobV2}save-email-ai-interview/${this.base64Encode(id)}/${projectId}`, payload).pipe(timeout(75000), catchError((error: HttpErrorResponse) => {

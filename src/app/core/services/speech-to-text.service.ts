@@ -78,6 +78,8 @@ export class RealtimeSpeechToTextTranscriptionService {
 
               this.translationData$.next(this.transcriptResponse);
               this.transcriptResponse = '';
+              this.SocketRealTimeCommunication.closeSilienceDetectionWebSocket()
+
             }
 
             this.SocketRealTimeCommunication.SilienceDetech$.next({ bool: false, completeBlob: [] });
@@ -108,12 +110,12 @@ export class RealtimeSpeechToTextTranscriptionService {
         numberOfAudioChannels: 1,
         timeSlice: 1000,
         ondataavailable: async (blob) => {
-
+          
           this.sendAudioChunk(blob)
+          this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob);
           this.SocketRealTimeCommunication.isAudioIsBeingPlaying$.pipe(filter((resp) => resp === false)
         ).subscribe({
           next: (resp: any) => {
-            this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob);
 
               console.log('true || false',resp);
 

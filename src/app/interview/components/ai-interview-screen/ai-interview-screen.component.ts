@@ -28,6 +28,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { AwsService } from 'src/app/core/services/aws.service';
 import { SocketRealTimeCommunicationService } from 'src/app/core/services/socket-real-time-communication.service';
 import { MicrophonePermissionDialogComponent } from 'src/app/core/dialog/microphone-permission-dialog/microphone-permission-dialog.component';
+import { InstructionService } from 'src/app/core/services/instruction.service';
 
 type RecordingState = 'NONE' | 'RECORDING' | 'RECORDED';
 declare global {
@@ -144,6 +145,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   showSubmitAnswer: boolean = false;
   private audioWorker!: Worker;
   private isApiResponseComplete: boolean = false;  // To track when API response is done
+  selectedFiles: File[] = [];
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -157,7 +159,9 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     private ref: ChangeDetectorRef,
     private speechToText: TextToSpeechService,
     private ScreenRecordingService: ScreenRecordingService,
-    public SocketRealTimeService: SocketRealTimeCommunicationService
+    public SocketRealTimeService: SocketRealTimeCommunicationService,
+    private instructionService: InstructionService
+
   ) {
     this.ScreenRecordingService.getMediaStream().subscribe((data) => {
       this.screenRecordvideo.srcObject = data;
@@ -231,9 +235,9 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     this.start();
     this.startBlinking();
 
+    // this.SocketRealTimeService.connectWebSocket();
     this.SocketRealTimeService.connectWebSocket();
-
-    this.SocketRealTimeService.ConnectionQuestionAnswerSocket();
+    // this.SocketRealTimeService.ConnectionQuestionAnswerSocket();
 
     this.SocketRealTimeService.interviewQuestion$.subscribe({
       next: (resp: any) => {
@@ -250,7 +254,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       .subscribe({
         next: (resp: any) => {
           // this.audioBufferQueue = [];
-          this.SocketRealTimeService.isAudioIsBeingPlaying$.next(false);
+          // this.SocketRealTimeService.isAudioIsBeingPlaying$.next(false);
           // if (this.audioContext) {
           this.isApiResponseComplete = true
           //   this.audioContext.close();
@@ -270,7 +274,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
         next: (resp: any) => {
           this.playAudioChunk(resp);
           this.isApiResponseComplete = false
-          this.SocketRealTimeService.isAudioIsBeingPlaying$.next(true);
+          // this.SocketRealTimeService.isAudioIsBeingPlaying$.next(true);
 
         },
       });
@@ -301,7 +305,8 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
         next: (res: any) => {
           if (res !== null) {
             this.hideSubmitText = true;
-            this.SocketRealTimeService.sendAnswer(res);
+            this.SocketRealTimeService.submitAnswer(res)
+            // this.SocketRealTimeService.sendAnswer(res);
             this.subtitle = '';
             this.countdownValueForSentAnswer = 3;
 
@@ -377,103 +382,103 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-// Helper function to create the source and gain node
-createSource(buffer: AudioBuffer) {
-  const source = this.audioContext.createBufferSource();
-  const gainNode = this.audioContext.createGain();
+  // Helper function to create the source and gain node
+  createSource(buffer: AudioBuffer) {
+    const source = this.audioContext.createBufferSource();
+    const gainNode = this.audioContext.createGain();
 
-  source.buffer = buffer;
-  // Connect source to gain node
-  source.connect(gainNode);
-  // Connect gain node to destination
-  gainNode.connect(this.audioContext.destination);
+    source.buffer = buffer;
+    // Connect source to gain node
+    source.connect(gainNode);
+    // Connect gain node to destination
+    gainNode.connect(this.audioContext.destination);
 
-  return { source, gainNode };
-}
-applyTremoloWithCurve() {
-  const DURATION = 2;
-  const FREQUENCY = 1;
-  const SCALE = 0.4;
-  const valueCount = 4096;
-  const values = new Float32Array(valueCount);
+    return { source, gainNode };
+  }
+  applyTremoloWithCurve() {
+    const DURATION = 2;
+    const FREQUENCY = 1;
+    const SCALE = 0.4;
+    const valueCount = 4096;
+    const values = new Float32Array(valueCount);
 
-  for (let i = 0; i < valueCount; i++) {
-    const percent = (i / valueCount) * DURATION * FREQUENCY;
-    values[i] = 1 + (Math.sin(percent * 2 * Math.PI) * SCALE);
-    if (i === valueCount - 1) {
-      values[i] = 1; // Restore to normal at the end
+    for (let i = 0; i < valueCount; i++) {
+      const percent = (i / valueCount) * DURATION * FREQUENCY;
+      values[i] = 1 + (Math.sin(percent * 2 * Math.PI) * SCALE);
+      if (i === valueCount - 1) {
+        values[i] = 1; // Restore to normal at the end
+      }
+    }
+
+    // Apply it to the gain node over a 2-second duration
+    this.gainNode.gain.setValueCurveAtTime(values, this.audioContext.currentTime, DURATION);
+  }
+
+
+  applyTremoloWithOscillator(gainNode: GainNode) {
+    const DURATION = 2;
+    const FREQUENCY = 0.5; // Reduced frequency for smoother effect
+    const SCALE = 0.3; // Less aggressive tremolo
+
+    const osc = this.audioContext.createOscillator();
+    osc.frequency.value = FREQUENCY;
+
+    const gain = this.audioContext.createGain();
+    gain.gain.value = SCALE;
+
+    osc.connect(gain);
+    gain.connect(gainNode.gain);
+
+    osc.start();
+    osc.stop(this.audioContext.currentTime + DURATION);
+  }
+
+
+  // Optimized playback function with fading effects
+  private async playNextChunk() {
+    if (this.isPlaying || this.isRingBufferEmpty()) return;
+
+    const audioBuffer = this.dequeueFromRingBuffer();
+    if (!audioBuffer) {
+      this.isPlaying = false;
+      return;
+    }
+
+    try {
+      const currTime = this.audioContext.currentTime;
+      const fadeTime = 0.1; // Adjusted fade time for smoother transitions
+
+      // Create the source and gain node
+      const { source, gainNode } = this.createSource(audioBuffer);
+
+      // Apply tremolo effect
+      this.applyTremoloWithOscillator(gainNode); // Use oscillator-based tremolo
+
+      const duration = audioBuffer.duration;
+
+      // Apply fade in and fade out smoothly
+      gainNode.gain.setValueAtTime(0, currTime); // Start at 0 gain
+      gainNode.gain.linearRampToValueAtTime(1, currTime + fadeTime); // Fade in
+      gainNode.gain.setValueAtTime(1, currTime + duration - fadeTime); // Maintain volume
+      gainNode.gain.linearRampToValueAtTime(0, currTime + duration); // Fade out
+
+      // Start playback and ensure proper timing
+      source.start(currTime);
+
+      this.isPlaying = true;
+
+      // Wait for the current audio chunk to finish before moving to the next
+      source.onended = () => {
+        this.isPlaying = false;
+        source.disconnect(); // Disconnect after playback
+        gainNode.disconnect();
+        this.playNextChunk(); // Proceed to the next chunk
+      };
+    } catch (error) {
+      console.error('Error playing audio chunk:', error);
+      this.isPlaying = false;
     }
   }
-
-  // Apply it to the gain node over a 2-second duration
-  this.gainNode.gain.setValueCurveAtTime(values, this.audioContext.currentTime, DURATION);
-}
-
-
-applyTremoloWithOscillator(gainNode: GainNode) {
-  const DURATION = 2;
-  const FREQUENCY = 0.5; // Reduced frequency for smoother effect
-  const SCALE = 0.3; // Less aggressive tremolo
-
-  const osc = this.audioContext.createOscillator();
-  osc.frequency.value = FREQUENCY;
-
-  const gain = this.audioContext.createGain();
-  gain.gain.value = SCALE;
-
-  osc.connect(gain);
-  gain.connect(gainNode.gain);
-
-  osc.start();
-  osc.stop(this.audioContext.currentTime + DURATION);
-}
-
-
-// Optimized playback function with fading effects
-private async playNextChunk() {
-  if (this.isPlaying || this.isRingBufferEmpty()) return;
-
-  const audioBuffer = this.dequeueFromRingBuffer();
-  if (!audioBuffer) {
-    this.isPlaying = false;
-    return;
-  }
-
-  try {
-    const currTime = this.audioContext.currentTime;
-    const fadeTime = 0.1; // Adjusted fade time for smoother transitions
-
-    // Create the source and gain node
-    const { source, gainNode } = this.createSource(audioBuffer);
-
-    // Apply tremolo effect
-    this.applyTremoloWithOscillator(gainNode); // Use oscillator-based tremolo
-
-    const duration = audioBuffer.duration;
-
-    // Apply fade in and fade out smoothly
-    gainNode.gain.setValueAtTime(0, currTime); // Start at 0 gain
-    gainNode.gain.linearRampToValueAtTime(1, currTime + fadeTime); // Fade in
-    gainNode.gain.setValueAtTime(1, currTime + duration - fadeTime); // Maintain volume
-    gainNode.gain.linearRampToValueAtTime(0, currTime + duration); // Fade out
-
-    // Start playback and ensure proper timing
-    source.start(currTime);
-
-    this.isPlaying = true;
-
-    // Wait for the current audio chunk to finish before moving to the next
-    source.onended = () => {
-      this.isPlaying = false;
-      source.disconnect(); // Disconnect after playback
-      gainNode.disconnect();
-      this.playNextChunk(); // Proceed to the next chunk
-    };
-  } catch (error) {
-    console.error('Error playing audio chunk:', error);
-    this.isPlaying = false;
-  }
-}
 
 
 
@@ -757,6 +762,36 @@ private async playNextChunk() {
       }
     }, 1000);
   }
+  uploadFiles(): void {
+    if (this.selectedFiles.length === 0) {
+      console.warn('No file selected');
+      return;
+    }
+  
+    const file = this.selectedFiles[0]; // Assuming single file
+    const reader = new FileReader();
+  
+    // Send the "UPLOAD_RESUME" command first
+    this.SocketRealTimeService.UPLOAD_RESUME();
+  
+    // Once the file is read as ArrayBuffer, send it via WebSocket
+    reader.onload = (event: ProgressEvent<FileReader>) => {
+      const fileData = event.target?.result as ArrayBuffer;
+  
+      // Send the file as binary data
+      this.SocketRealTimeService.fileSent(fileData);
+    };
+  
+    // Read the file as an ArrayBuffer (to be sent as binary data)
+    reader.readAsArrayBuffer(file);
+  }
+  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFiles = Array.from(input.files); // Convert FileList to an array
+    }
+  }
 
   ngOnDestroy(): void {
     this._unsubscribe$.next(true);
@@ -773,9 +808,9 @@ private async playNextChunk() {
 
     this.SocketRealTimeService.closeSilienceDetectionWebSocket()
 
-    this.SocketRealTimeService.Close_Socket_clearAudioSegment()
+    // this.SocketRealTimeService.Close_Socket_clearAudioSegment()
 
-    this.SocketRealTimeService.Close_Socket_questionAnswerSocket()
+    // this.SocketRealTimeService.Close_Socket_questionAnswerSocket()
 
 
     if (this.audioContext) {

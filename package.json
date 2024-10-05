@@ -43,6 +43,7 @@
     "moment": "^2.30.1",
     "ng-speed-test": "^2.6.1",
     "ngx-capture": "^0.13.0",
+    "ngx-select-dropdown": "^3.3.2",
     "ngx-skeleton-loader": "^8.1.0",
     "ngx-toastr": "^18.0.0",
     "ngx-webcam": "^0.4.1",

@@ -9,6 +9,20 @@
       Ai Assessing
     </p>
 </div>
+
+<div class="bg-white border-round-12 px-8 py-16 mt-16  position-relative text-center overflow-hidden" style="border: 1px solid #801FFF80;">
+  <div class="upload-section p-16 bg-soft-breeze border-blue-fog border-round-12">
+    <p class="fw-600 fs-20 mb-16 text-black">Upload your files for reload</p>
+    <label class="upload-btn">
+      <input type="file" id="file-upload" accept=".csv, .docx, .pdf" (change)="onFileSelected($event)" multiple />
+      <span>Click to Upload Files</span>
+    </label>
+    <p class="fw-400 fs-14 mt-8 text-deep-twilight">Ensure all necessary files are uploaded before continuing.</p>
+    <button (click)="uploadFiles()" [disabled]="!selectedFiles.length">Upload</button>
+  </div>
+</div>
+
+
  </div>
 <div class="my-16">
   <div class="px-24 py-12 border-round-60 content-flex border-gray bg-white">

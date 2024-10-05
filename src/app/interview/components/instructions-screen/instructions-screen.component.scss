@@ -20,7 +20,7 @@
     
 }
     ::ng-deep .start-interview-btn .p-button{
-        position: absolute;
+        // position: absolute;
         bottom: 0px;
         width: 92%;
         display: flex;
@@ -30,7 +30,8 @@
         border-radius: 50px;
         background-color: #0152FF;
         color: #ffffff;
-        margin-bottom: 50px;
+        // margin-bottom: 50px;
+        margin-top: 20px;
         
     }
 }
@@ -54,3 +55,30 @@
         //     }
         //   }
         // }
+
+        .upload-section {
+            text-align: center;
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .upload-btn input[type="file"] {
+            display: none;
+        }
+        
+        .upload-section p {
+            margin-top: 12px;
+        }

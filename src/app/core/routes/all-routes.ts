@@ -5,11 +5,11 @@ import { ReloadGuard } from "../guard/LocalStorageCleanupGuard";
 export const ALL_ROUTES: Routes =[
     {
         path: '',
-        redirectTo: 'instructions-screen',
+        redirectTo: 'Ai-interviewer',
         pathMatch: 'full',
     },
     {
-        path: 'instructions-screen',
+        path: 'Ai-interviewer',
         loadChildren: () => import('../../interview/interview.module').then(m => m.InterviewModule),
     }
 ];

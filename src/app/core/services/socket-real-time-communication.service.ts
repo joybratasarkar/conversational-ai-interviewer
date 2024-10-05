@@ -37,8 +37,8 @@ export class SocketRealTimeCommunicationService {
     private speechToText: TextToSpeechService,
     private router: Router,
     private toastr: ToastrService,
-    private intructionService :InstructionService,
-    private route :ActivatedRoute
+    private intructionService: InstructionService,
+    private route: ActivatedRoute
 
 
   ) {
@@ -58,83 +58,71 @@ export class SocketRealTimeCommunicationService {
 
   async connectWebSocket(): Promise<void> {
     try {
-      let wsUrl = `${this.socket_ai_interview}ws`;
-
+      // Construct the WebSocket URL
+      let wsUrl = `${this.test_url_for_ai_interview}ws`;
       this.socket = new WebSocket(wsUrl);
-      // console.log('this.socket', this.socket);
+
+      // Retrieve user details from local storage (if needed)
       let user = localStorage.getItem('user');
-      let data
       if (user) {
-        data = JSON.parse(user);
-        this.exam_id = data.exam_id
-        // this.userFirstName = this.user.candidate_info.first_name;
-        //  this.projectId = this.user.job_id;
+        let data = JSON.parse(user);
+        this.exam_id = data.exam_id;
+        this.projectId = data.projectId;
       }
 
-      // this.connectionSilienceDetection();
-
+      // WebSocket connection opens
       this.socket.onopen = () => {
-        let data = {
-          job_id: this.id,
-          projectId: this.projectId,
-          exam_id: this.exam_id
-        };
+        console.log('WebSocket connected');
+        this.isAudioIsBeingPlaying$.next(true)
 
-        this.socket.send(JSON.stringify(data));
+        // Optionally send some initial data if needed when opening the WebSocket
       };
+
+      // Handle incoming messages from the backend WebSocket
       this.socket.onmessage = (event: MessageEvent) => {
-        // Notify that audio is being played
-        // this.isAudioIsBeingPlaying$.next(true);
+        let messageData = JSON.parse(event.data);
+        this.isAudioIsBeingPlaying$.next(true)
+        this.interviewQuestion$.next(messageData?.question)
+        this.speechToText.onOpenSocket(messageData?.question);
 
-
-        let conversationObj: any;
-
-        // Try to parse the incoming data as JSON
-        try {
-          conversationObj = JSON.parse(event?.data);  // Parse event.data directly
-        } catch (error) {
-          console.error("Error parsing JSON:", error);
-          // If not valid JSON, treat it as plain text
-          conversationObj = { question: event?.data };
-        }
-
-        // Ensure that the parsed object contains the expected properties
-        if (conversationObj && conversationObj.question !== undefined) {
-          // Pass the question to the observables
-          this.interviewQuestion$.next(conversationObj.question);
-          this.interviewQuestionNumber$.next(conversationObj.question_number);
-
-          // Call the speech-to-text function
-          this.speechToText.onOpenSocket(conversationObj.question);
-        } else {
-          // Handle case where question is not found
-          console.warn('Received event data without a valid question:', event?.data);
-          this.speechToText.onOpenSocket(event?.data); // Fallback to the raw data
-        }
-
-        // console.log('Received message from WebSocket:', event.data);
       };
 
-
+      // Handle WebSocket close events
       this.socket.onclose = (event: CloseEvent) => {
         console.warn(`WebSocket closed: ${event.reason}`);
-        this.reconnectWebSocket();
+        this.reconnectWebSocket();  // Optionally handle reconnection
       };
 
+      // Handle WebSocket errors
       this.socket.onerror = (error: Event) => {
         console.error('WebSocket error:', error);
-        this.socket.close();
+        this.socket.close();  // Close the socket on error
       };
+
     } catch (error) {
       console.error('Error:', error);
-      // this.reconnectWebSocket();
     }
   }
+  UPLOAD_RESUME() {
+    this.socket.send('UPLOAD_RESUME');
+
+  }
+
+ 
+  submitAnswer(answer:any) {
+    this.socket.send(`ANSWER:${answer}`);
+  }
+  
+  fileSent(fileData: any) {
+    this.socket.send(fileData);
+
+  }
+
 
   reconnectWebSocket(): void {
     setTimeout(() => {
-    console.log('Attempting to reconnect...');
-    this.connectWebSocket();
+      console.log('Attempting to reconnect...');
+      this.connectWebSocket();
     }, this.reconnectDelay);
   }
 
@@ -224,73 +212,8 @@ export class SocketRealTimeCommunicationService {
   }
 
 
-  async ConnectionQuestionAnswerSocket(): Promise<void> {
-
-    let wsUrl = `${this.socket_ai_interview}questionAnswering`;
-
-    this.questionAnswerSocket = new WebSocket(wsUrl);
-
-    this.questionAnswerSocket.onopen = () => {
-
-      // this.sendAnswer(test)
-      // this.connectionSilienceDetection();
 
 
-    };
-
-    this.questionAnswerSocket.onmessage = (event: any) => {
-      // console.log('answe=============================================', event.data);
-      // this.connectWebSocket()
-      // this.isAudioIsBeingPlaying$.next(true)
-
-      const conversationObj = JSON.parse(event.data);  // Parse event.data directly
-
-
-      this.interviewQuestion$.next(conversationObj.question)
-      this.interviewQuestionNumber$.next(conversationObj.question_number)
-
-      // this.connectionSilienceDetectionSocket()
-      this.speechToText.onOpenSocket(conversationObj?.message);
-
-      if (conversationObj?.interViewEnd === true) {
-    let payload = {
-      candidate_interaction_id: 15,
-        stage: "Interview Completed",
-
-    }
-    this.intructionService.startEndInterview(payload).subscribe({
-      next : (res :any)=>{
-        setTimeout(() => {
-
-          this.router.navigate(['/instructions-screen/thankyou'], {queryParams : {projectId : this.route.snapshot.queryParams['projectId']}});
-          localStorage.clear();
-
-        }, 6000);
-
-        
-      },
-      error : (err :any)=>{
-        console.error(err);
-        
-      }
-    })
-
-      }
-
-      // this.speechToText.onOpenSocket(event.data);
-
-    }
-
-  }
-  
-  sendAnswer(eosMessage: any): void {
-    let data = {
-      projectId: this.id,
-      sender: 'answers',
-      text: eosMessage
-    }
-    this.questionAnswerSocket.send(JSON.stringify(data));
-  }
 
 
   closeWebSocket(): void {
@@ -310,6 +233,7 @@ export class SocketRealTimeCommunicationService {
     if (this.connectionSilienceDetectionSocket) {
       this.connectionSilienceDetectionSocket.close();
       console.log('Silence detection WebSocket connection closed');
+
     }
   }
 

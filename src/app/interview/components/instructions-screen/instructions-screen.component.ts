@@ -14,13 +14,12 @@ export class InstructionsScreenComponent implements OnInit {
   userFirstName : any
   projectId :any
   mediaStream: MediaStream | undefined;
+  selectedFiles: File[] = [];
 
   constructor (
     private router :Router,
     private route : ActivatedRoute,
     private utility :UtilityService,
-    private instructionService :InstructionService
-
   ){
 
   }
@@ -34,6 +33,14 @@ export class InstructionsScreenComponent implements OnInit {
     //  this.projectId = this.user.job_id;
     } 
     
+
+  }
+ 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.selectedFiles = Array.from(input.files); // Convert FileList to an array
+    }
   }
   startInterview() {
     this.checkMediaPermissions()
@@ -53,24 +60,9 @@ export class InstructionsScreenComponent implements OnInit {
           this.mediaStream = stream;
   
           console.log('Audio and video permissions granted.');
-          let payload = {
-            "candidate_interaction_id": 401,
-            "stage": "Interview Started",
-          }
-          
-          this.instructionService.startEndInterview(payload).subscribe({
-            next : (res :any )=>{
-              console.log('res', );
-              if(res.statusCode == 200){
-                this.router.navigate(['instructions-screen/ai-interview-screen'], 
-            { queryParams: { projectId: this.projectId } }
-          );
-              }
-              
-            },error : (err :any)=>{
-              console.error(err)
-            }
-          })
+         
+          this.router.navigate(['Ai-interviewer/ai-interview-screen']) 
+
 
         } else {
           alert('Please ensure that both camera and microphone are enabled and try again.');

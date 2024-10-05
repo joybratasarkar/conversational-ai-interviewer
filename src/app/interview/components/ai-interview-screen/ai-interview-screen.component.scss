@@ -20,3 +20,30 @@
   overflow: hidden;
   // border-image-source: linear-gradient(180deg, rgba(7, 55, 255, 0.5) -46.67%, rgba(128, 31, 255, 0.5) 77.78%);
 }
+
+.upload-section {
+  text-align: center;
+}
+
+.upload-btn {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #0056b3;
+}
+
+.upload-btn input[type="file"] {
+  display: none;
+}
+
+.upload-section p {
+  margin-top: 12px;
+}

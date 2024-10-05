@@ -4,7 +4,6 @@ import { IntroductionScreenComponent } from './components/introduction-screen/in
 import { AiInterviewScreenComponent } from './components/ai-interview-screen/ai-interview-screen.component';
 import { ReloadGuard } from '../core/guard/LocalStorageCleanupGuard';
 import { ThankyouScreenComponent } from './components/thankyou-screen/thankyou-screen.component';
-import { StartInterviewScreenComponent } from './components/start-interview-screen/start-interview-screen.component';
 import { InstructionsScreenComponent } from './components/instructions-screen/instructions-screen.component';
 
 const routes: Routes = [
@@ -17,11 +16,7 @@ const routes: Routes = [
     path: '',
     component: InstructionsScreenComponent
   },
-  {
-    path: 'start-interview-screen',
-    component: StartInterviewScreenComponent,
-    // canActivate: [ReloadGuard]
-  },
+
   {
     path: 'ai-interview-screen',
     component: AiInterviewScreenComponent,
