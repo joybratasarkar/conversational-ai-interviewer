@@ -33,6 +33,7 @@ export class SocketRealTimeCommunicationService {
   test_url_for_ai_interview = environment.test_url_for_ai_interview;
   socket_ai_interview = environment.socket_ai_interview;
   public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
+  public resumeUploaded$ = new BehaviorSubject<any>(false);
 
   constructor(private activatedRoute: ActivatedRoute,
     private speechToText: TextToSpeechService,
@@ -85,7 +86,8 @@ export class SocketRealTimeCommunicationService {
         this.isAudioIsBeingPlaying$.next(true)
         this.interviewQuestion$.next(messageData?.question)
         this.interviewQuestionCompleteSentence$.next(messageData?.question);
-
+        
+        this.resumeUploaded$.next(messageData?.loader)
         // this.speechToText.onOpenSocket(messageData?.question);
 
       };

@@ -147,6 +147,8 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   private isApiResponseComplete: boolean = false;  // To track when API response is done
   selectedFiles: File[] = [];
   public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
+  inputValue: string = '';
+  public showSpinner$ = new BehaviorSubject<boolean>(false);
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -162,7 +164,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     private ScreenRecordingService: ScreenRecordingService,
     public SocketRealTimeService: SocketRealTimeCommunicationService,
     private instructionService: InstructionService,
-    private textToSpeech:TextToSpeechService
+    private textToSpeech: TextToSpeechService
 
   ) {
     this.ScreenRecordingService.getMediaStream().subscribe((data) => {
@@ -247,20 +249,27 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       },
     });
 
-   
+
 
     this.startCountdown();
 
     this.SocketRealTimeService.interviewQuestionCompleteSentence$.pipe(filter((resp: any) => resp !== "")
-  ).subscribe({
+    ).subscribe({
       next: (resp: any) => {
-        
+
         this.textToSpeech.speak(resp);
 
       },
     })
-
-  
+    this.SocketRealTimeService.resumeUploaded$
+      .pipe(
+        filter((resp: any) => resp==false) // Only allow truthy values to pass
+      )
+      .subscribe({
+        next: (resp: any) => {
+          this.showSpinner$.next(false);
+        }
+      });
 
     this.speech = '';
     this.subtitle = '';
@@ -342,6 +351,12 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
 
 
 
+  onButtonClick(): void {
+    console.log('Input Value:', this.inputValue);
+    this.SocketRealTimeService.submitAnswer(this.inputValue)
+
+    // Add more logic here if needed
+  }
   // Adjusted audio playback to reduce latency
   async playAudioChunk(base64Data: string) {
     try {
@@ -751,25 +766,26 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       console.warn('No file selected');
       return;
     }
-  
+    this.showSpinner$.next(true)
+
     const file = this.selectedFiles[0]; // Assuming single file
     const reader = new FileReader();
-  
+
     // Send the "UPLOAD_RESUME" command first
     this.SocketRealTimeService.UPLOAD_RESUME();
-  
+
     // Once the file is read as ArrayBuffer, send it via WebSocket
     reader.onload = (event: ProgressEvent<FileReader>) => {
       const fileData = event.target?.result as ArrayBuffer;
-  
+
       // Send the file as binary data
       this.SocketRealTimeService.fileSent(fileData);
     };
-  
+
     // Read the file as an ArrayBuffer (to be sent as binary data)
     reader.readAsArrayBuffer(file);
   }
-  
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {

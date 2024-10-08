@@ -21,9 +21,22 @@
           <span>Click to Upload Files</span>
         </label>
         <p class="fw-400 fs-14 mt-8 text-deep-twilight">Ensure all necessary files are uploaded before continuing.</p>
-        <button class="upload-btn" (click)="uploadFiles()" [disabled]="!selectedFiles.length">Upload</button>
+        <button class="upload-btn" (click)="uploadFiles()" [disabled]="!selectedFiles.length">
+          <!-- Show Upload text only when spinner is not visible -->
+          <span *ngIf="!(showSpinner$ | async)">Upload</span>
+          
+          <!-- Show spinner when showSpinner$ is true -->
+          <ng-container *ngIf="showSpinner$ | async">
+            <div class="spinner" style="--spinner-diameter: 20px;"></div>
+          </ng-container>
+        </button>
+        
       </div>
     </div>
+    <!-- <div>
+      <input type="text" [(ngModel)]="inputValue" placeholder="Enter text" />
+      <button (click)="onButtonClick()">Submit</button>
+    </div> -->
 
 
   </div>
