@@ -1,60 +1,67 @@
 <section class="interview-screen border-gray px-42 pb-20 w-full h-cal-82px font-gabarito bg-icy-mist">
- <div>
-  <div class="bg-white border-round-12 px-8 py-16 mt-16  position-relative text-center overflow-hidden" style="border: 1px solid #801FFF80;">
-    <video #videoElement autoplay [height]="200" [width]="340"  poster="assets/video-placeholder.jpg" >
-      <source  [src]="videoBlobUrl" class="border-round-6">
-    </video>
-    <p class="content-flex-center text-gradient fw-700 fs-14 line-h-20"> 
-      <img src="../../../../assets/images/new-flow/gradient-ss.svg" alt="gradient-ss" width="16px" height="16px" class="me-8">
-      Ai Assessing
-    </p>
-</div>
+  <div>
+    <div class="bg-white border-round-12 px-8 py-16 mt-16  position-relative text-center overflow-hidden"
+      style="border: 1px solid #801FFF80;">
+      <video #videoElement autoplay [height]="200" [width]="340" poster="assets/video-placeholder.jpg">
+        <source [src]="videoBlobUrl" class="border-round-6">
+      </video>
+      <p class="content-flex-center text-gradient fw-700 fs-14 line-h-20">
+        <img src="../../../../assets/images/new-flow/gradient-ss.svg" alt="gradient-ss" width="16px" height="16px"
+          class="me-8">
+        Ai Assessing
+      </p>
+    </div>
 
-<div class="bg-white border-round-12 px-8 py-16 mt-16  position-relative text-center overflow-hidden" style="border: 1px solid #801FFF80;">
-  <div class="upload-section p-16 bg-soft-breeze border-blue-fog border-round-12">
-    <p class="fw-600 fs-20 mb-16 text-black">Upload your files for reload</p>
-    <label class="upload-btn">
-      <input type="file" id="file-upload" accept=".csv, .docx, .pdf" (change)="onFileSelected($event)" multiple />
-      <span>Click to Upload Files</span>
-    </label>
-    <p class="fw-400 fs-14 mt-8 text-deep-twilight">Ensure all necessary files are uploaded before continuing.</p>
-    <button class="upload-btn" (click)="uploadFiles()" [disabled]="!selectedFiles.length">Upload</button>
+    <div class="bg-white border-round-12 px-8 py-16 mt-16  position-relative text-center overflow-hidden"
+      style="border: 1px solid #801FFF80;">
+      <div class="upload-section p-16 bg-soft-breeze border-blue-fog border-round-12">
+        <p class="fw-600 fs-20 mb-16 text-black">Upload your files for reload</p>
+        <label class="upload-btn">
+          <input type="file" id="file-upload" accept=".csv, .docx, .pdf" (change)="onFileSelected($event)" multiple />
+          <span>Click to Upload Files</span>
+        </label>
+        <p class="fw-400 fs-14 mt-8 text-deep-twilight">Ensure all necessary files are uploaded before continuing.</p>
+        <button class="upload-btn" (click)="uploadFiles()" [disabled]="!selectedFiles.length">Upload</button>
+      </div>
+    </div>
+
+
   </div>
-</div>
-
-
- </div>
-<div class="my-16">
-  <div class="px-24 py-12 border-round-60 content-flex border-gray bg-white">
+  <div class="my-16">
+    <div class="px-24 py-12 border-round-60 content-flex border-gray bg-white">
       <span class="text-gradient fw-600 fs-24 line-h-28 me-24">Technical Test</span>
       <!-- <span class="w-70"><p-progressBar [value]="50" [showValue]="false" /></span> -->
       <span class="text-deep-twilight fw-400 fs-12 line-h-24 flex align-center ms-24">
-        <img src="../../../../assets/images/new-flow/sand-clock-icon.svg" alt="sand-clock-icon" width="12px" height="12px" class="me-8">
+        <img src="../../../../assets/images/new-flow/sand-clock-icon.svg" alt="sand-clock-icon" width="12px"
+          height="12px" class="me-8">
         <!-- {{this.countdownValue}} -->
         {{display}}
       </span>
-  </div>
-  <div class="mt-20 py-12 px-16 border-gray border-round-10 h-75vh bg-white relative">
-       <p class="content-flex pb-8 border-bottom-gray text-black fs-14 fw-500 line-h-16">
+    </div>
+    <div class="mt-20 py-12 px-16 border-gray border-round-10 h-75vh bg-white relative">
+      <p class="content-flex pb-8 border-bottom-gray text-black fs-14 fw-500 line-h-16">
         <span>
           <ng-container *ngIf="this.SocketRealTimeService.interviewQuestionNumber$ | async as interviewQuestion">
             <p>Q{{interviewQuestion}}</p>
-          
+
           </ng-container>
-        </span> 
+        </span>
         <span>Technical Test | Section 1</span>
       </p>
 
-       <p class="mt-16 fw-500 fs-20 line-h-24 mb-24 text-stormy-night">
-{{this.interviewQuestion}}
+      <p class="mt-16 fw-500 fs-20 line-h-24 mb-24 text-stormy-night">
+        {{this.interviewQuestion}}
       </p>
 
       <div class="content-flex border-gray border-round-50 py-4 px-16">
-           <p class="fw-500 fs-16 line-h-20 px-16 py-8 text-deep-blue border-blue border-round-32 bg-powdered-lavender"> Speak to answer we’ll detect it. </p>
-           <p class="flex align-center">
-             <span class="me-16 text-gradient"> AI Speech </span>
-             <img src="../../../../assets/images/animations-voice-.gif" alt="animations-voice-gif" width="80px" height="50px" class="me-16">
-              <span class="text-gradient"> Detection Active </span></p>
+        <p class="fw-500 fs-16 line-h-20 px-16 py-8 text-deep-blue border-blue border-round-32 bg-powdered-lavender">
+          Speak to answer we’ll detect it. </p>
+        <p class="flex align-center">
+          <span class="me-16 text-gradient"> AI Speech </span>
+          <img src="../../../../assets/images/animations-voice-.gif" alt="animations-voice-gif" width="80px"
+            height="50px" class="me-16">
+          <span class="text-gradient"> Detection Active </span>
+        </p>
       </div>
 
       <!-- <div class="p-28 border-gray absolute bottom-0 mb-28 subtitle-section">
@@ -70,18 +77,19 @@
       </div> -->
       <div class="p-28 border-gray absolute bottom-0 mb-28 subtitle-section" style="width: 96% !important;">
         <p class="pb-28 border-bottom-gray fs-16 line-h-20 fw-500 text-black ">Your Transcript</p>
-         <div class="mt-28 font-ibm subtitle-section-content">
+        <div class="mt-28 font-ibm subtitle-section-content">
           <p class="fs-16 line-h-20 fw-500 mb-16 text-phantom-black">{{this.subtitle}}</p>
           <!-- <p   class="mb-16 text-phantom-black" >[PAUSE] 3s</p> -->
-                    <p   class="mb-16 text-phantom-black" *ngIf="hideSubmitText" >[Submiting in] {{this.countdownValueForSentAnswer}}s</p>
+          <p class="mb-16 text-phantom-black" *ngIf="hideSubmitText">[Submiting in]
+            {{this.countdownValueForSentAnswer}}s</p>
 
-          
+
           <!-- <p class="mb-16">API Layer: Implement an API for creating and retrieving shortened URLs. This includes handling requests, generating short codes, and redirecting to the original URLs.
             Caching: Integrate caching mechanisms to reduce database load for popular URLs.
           </p> -->
           <p *ngIf="this.showSubmitAnswer" class="mb-16">[PAUSE] {{displaySubmitAnswer}} Answere Submitted.</p>
-         </div>
-    </div>    
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 </section>
