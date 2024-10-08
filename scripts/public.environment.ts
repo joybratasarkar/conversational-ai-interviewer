@@ -21,7 +21,7 @@ const PUBLIC_ENV_VARIABLES = {
         accessKeyId:'AKIAQPB36OTHTT2WS3XP',
         secretAccessKey:'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',
         test_url_for_ai_interview:'http://127.0.0.1:8000/',
-        socket_ai_interview:'https://staging-api.supersourcing.com/ai-interviewer/',
+        socket_ai_interview:'http://34.67.220.103:8000/',
         ss_ai:'https://dev-api.supersourcing.com/ss-ai/api/v1/',
         localhostBacked:'http://192.168.1.229:3000/api/v1/'
     },
@@ -47,7 +47,7 @@ const PUBLIC_ENV_VARIABLES = {
         accessKeyId:'AKIAQPB36OTHTT2WS3XP',
         secretAccessKey:'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',
         test_url_for_ai_interview:'http://127.0.0.1:8000/',
-        socket_ai_interview:'https://staging-api.supersourcing.com/ai-interviewer/',
+        socket_ai_interview:'http://34.67.220.103:8000/',
         ss_ai:'https://staging-api.supersourcing.com/ss-ai/api/v1/',
         // ss_ai:'https://dev-api.supersourcing.com/ss-ai/api/v1/',
 
@@ -110,7 +110,7 @@ const PUBLIC_ENV_VARIABLES = {
         accessKeyId:'AKIAQPB36OTHTT2WS3XP',
         secretAccessKey:'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',
         test_url_for_ai_interview:'http://127.0.0.1:8000/',
-        socket_ai_interview:'https://staging-api.supersourcing.com/ai-interviewer/',
+        socket_ai_interview:'http://34.67.220.103:8000/',
         ss_ai:'https://dev-api.supersourcing.com/ss-ai/api/v1/',
         localhostBacked:'http://192.168.1.229:3000/api/v1/'
 
