@@ -17,7 +17,6 @@ import { MaterialModule } from './shared-libraries/material/material';
   declarations: [
     AppComponent,
     MicrophonePermissionDialogComponent,    
-    
   ],
   imports: [
     BrowserModule,

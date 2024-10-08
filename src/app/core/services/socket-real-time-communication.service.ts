@@ -32,6 +32,7 @@ export class SocketRealTimeCommunicationService {
   eventDataArray: any[] = [];
   test_url_for_ai_interview = environment.test_url_for_ai_interview;
   socket_ai_interview = environment.socket_ai_interview;
+  public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
 
   constructor(private activatedRoute: ActivatedRoute,
     private speechToText: TextToSpeechService,
@@ -59,7 +60,7 @@ export class SocketRealTimeCommunicationService {
   async connectWebSocket(): Promise<void> {
     try {
       // Construct the WebSocket URL
-      let wsUrl = `${this.test_url_for_ai_interview}ws`;
+      let wsUrl = `${this.socket_ai_interview}ws`;
       this.socket = new WebSocket(wsUrl);
 
       // Retrieve user details from local storage (if needed)
@@ -83,7 +84,9 @@ export class SocketRealTimeCommunicationService {
         let messageData = JSON.parse(event.data);
         this.isAudioIsBeingPlaying$.next(true)
         this.interviewQuestion$.next(messageData?.question)
-        this.speechToText.onOpenSocket(messageData?.question);
+        this.interviewQuestionCompleteSentence$.next(messageData?.question);
+
+        // this.speechToText.onOpenSocket(messageData?.question);
 
       };
 

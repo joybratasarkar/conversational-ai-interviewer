@@ -22,13 +22,13 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { RealtimeSpeechToTextTranscriptionService } from 'src/app/core/services/speech-to-text.service';
 import { VideoRecordingService } from 'src/app/core/services/video-recording.service';
-import { TextToSpeechService } from 'src/app/core/services/tect-to-speech.service';
 import { ScreenRecordingService } from 'src/app/core/services/screen-recording.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AwsService } from 'src/app/core/services/aws.service';
 import { SocketRealTimeCommunicationService } from 'src/app/core/services/socket-real-time-communication.service';
 import { MicrophonePermissionDialogComponent } from 'src/app/core/dialog/microphone-permission-dialog/microphone-permission-dialog.component';
 import { InstructionService } from 'src/app/core/services/instruction.service';
+import { TextToSpeechService } from 'src/app/core/services/text-to-speech.service';
 
 type RecordingState = 'NONE' | 'RECORDING' | 'RECORDED';
 declare global {
@@ -146,6 +146,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   private audioWorker!: Worker;
   private isApiResponseComplete: boolean = false;  // To track when API response is done
   selectedFiles: File[] = [];
+  public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -157,10 +158,11 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     public RealtimeTranscription: RealtimeSpeechToTextTranscriptionService,
     private VideoRecording: VideoRecordingService,
     private ref: ChangeDetectorRef,
-    private speechToText: TextToSpeechService,
+    // private speechToText: TextToSpeechService,
     private ScreenRecordingService: ScreenRecordingService,
     public SocketRealTimeService: SocketRealTimeCommunicationService,
-    private instructionService: InstructionService
+    private instructionService: InstructionService,
+    private textToSpeech:TextToSpeechService
 
   ) {
     this.ScreenRecordingService.getMediaStream().subscribe((data) => {
@@ -245,39 +247,20 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       },
     });
 
-    this.speechToText.speechTranslatedEnd$
-      .pipe(
-        filter((bool: boolean) => bool === true),
-        takeUntil(this._unsubscribe$)
-
-      )
-      .subscribe({
-        next: (resp: any) => {
-          // this.audioBufferQueue = [];
-          // this.SocketRealTimeService.isAudioIsBeingPlaying$.next(false);
-          // if (this.audioContext) {
-          this.isApiResponseComplete = true
-          //   this.audioContext.close();
-          // }
-
-          // if (this.audioDecoderWorker) {
-          //   this.audioDecoderWorker.terminate();
-          // }
-        },
-      });
+   
 
     this.startCountdown();
 
-    this.speechToText.speechTranslated$
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (resp: any) => {
-          this.playAudioChunk(resp);
-          this.isApiResponseComplete = false
-          // this.SocketRealTimeService.isAudioIsBeingPlaying$.next(true);
+    this.SocketRealTimeService.interviewQuestionCompleteSentence$.pipe(filter((resp: any) => resp !== "")
+  ).subscribe({
+      next: (resp: any) => {
+        
+        this.textToSpeech.speak(resp);
 
-        },
-      });
+      },
+    })
+
+  
 
     this.speech = '';
     this.subtitle = '';
@@ -308,6 +291,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
             this.SocketRealTimeService.submitAnswer(res)
             // this.SocketRealTimeService.sendAnswer(res);
             this.subtitle = '';
+            this.textToSpeech.stop()
             this.countdownValueForSentAnswer = 3;
 
             this.countdownIntervalForSentAnswer = setInterval(() => {
@@ -799,7 +783,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
 
     this.clearScreenRecordedData();
 
-    this.speechToText.closeSocket();
+    // this.speechToText.closeSocket();
 
 
     this.RealtimeTranscription.closeWebSocket();
