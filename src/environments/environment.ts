@@ -1,6 +1,6 @@
 
     export const environment: any = {
-        production: false,
+        production: true,
         GOOGLE_PLACES_API: 'undefined',
         IP_REGISTRY_KEY: 'undefined',
         LINKEDIN_API_KEY: 'undefined',

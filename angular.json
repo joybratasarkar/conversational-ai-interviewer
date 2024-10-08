@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ss-ai-interview": {
+    "Conversational-Ai-Interviewe": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ss-ai-interview",
+            "outputPath": "dist/Conversational-Ai-Interviewe",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -80,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ss-ai-interview:build:production"
+              "browserTarget": "Conversational-Ai-Interviewe:build:production"
             },
             "development": {
-              "browserTarget": "ss-ai-interview:build:development"
+              "browserTarget": "Conversational-Ai-Interviewe:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ss-ai-interview:build"
+            "browserTarget": "Conversational-Ai-Interviewe:build"
           }
         },
         "test": {
