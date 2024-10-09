@@ -26,7 +26,7 @@
         orchestrator_base_url: 'https://5esvyzy70f.execute-api.ap-south-1.amazonaws.com/dev/api/v1/',
         frontend_url: 'http://localhost:4200/',
         test_url_for_ai_interview: 'http://127.0.0.1:8000/',
-        socket_ai_interview:'http://34.67.220.103:8000/',
+        socket_ai_interview:'https://34.67.220.103:8000/',
         socket_base_url: 'wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000',
         authorization:'e6da6e2959334bd4b82390e34e49a93b',
         LINKEDIN_SIGNUP_REDIRECT_URL: 'auth/signup',
