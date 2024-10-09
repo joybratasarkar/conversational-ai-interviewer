@@ -61,7 +61,7 @@ export class SocketRealTimeCommunicationService {
   async connectWebSocket(): Promise<void> {
     try {
       // Construct the WebSocket URL
-      let wsUrl = `${this.test_url_for_ai_interview}ws`;
+      let wsUrl = `${this.socket_ai_interview}ws`;
       debugger;
       this.socket = new WebSocket(wsUrl);
 
@@ -136,7 +136,7 @@ export class SocketRealTimeCommunicationService {
 
   async connectionSilienceDetection(): Promise<void> {
     try {
-      let wsUrl = `${this.test_url_for_ai_interview}silenceDetection`;
+      let wsUrl = `${this.socket_ai_interview}silenceDetection`;
 
       this.connectionSilienceDetectionSocket = new WebSocket(wsUrl);
 
@@ -192,7 +192,7 @@ export class SocketRealTimeCommunicationService {
 
   async clearAudioSegmentSocket(): Promise<void> {
 
-    let wsUrl = `${this.test_url_for_ai_interview}clearAudioSegment`;
+    let wsUrl = `${this.socket_ai_interview}clearAudioSegment`;
 
     this.clearAudioSegment = new WebSocket(wsUrl);
 
