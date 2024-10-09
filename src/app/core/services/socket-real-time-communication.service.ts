@@ -31,6 +31,7 @@ export class SocketRealTimeCommunicationService {
 
   eventDataArray: any[] = [];
   test_url_for_ai_interview = environment.test_url_for_ai_interview;
+  
   socket_ai_interview = environment.socket_ai_interview;
   public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
   public resumeUploaded$ = new BehaviorSubject<any>(false);
