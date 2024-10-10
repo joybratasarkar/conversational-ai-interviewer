@@ -77,7 +77,7 @@ export class SocketRealTimeCommunicationService {
       // WebSocket connection opens
       this.socket.onopen = () => {
         console.log('WebSocket connected');
-        this.isAudioIsBeingPlaying$.next(true)
+        // this.isAudioIsBeingPlaying$.next(true)
 
         // Optionally send some initial data if needed when opening the WebSocket
       };
@@ -85,7 +85,7 @@ export class SocketRealTimeCommunicationService {
       // Handle incoming messages from the backend WebSocket
       this.socket.onmessage = (event: MessageEvent) => {
         let messageData = JSON.parse(event.data);
-        this.isAudioIsBeingPlaying$.next(true)
+        // this.isAudioIsBeingPlaying$.next(true)
         this.interviewQuestion$.next(messageData?.question)
         this.interviewQuestionCompleteSentence$.next(messageData?.question);
         

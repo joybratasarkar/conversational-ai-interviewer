@@ -112,10 +112,10 @@ export class RealtimeSpeechToTextTranscriptionService {
         ondataavailable: async (blob) => {
           
           this.sendAudioChunk(blob)
-          this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob);
           this.SocketRealTimeCommunication.isAudioIsBeingPlaying$.pipe(filter((resp) => resp === false)
         ).subscribe({
           next: (resp: any) => {
+            this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob);
 
               console.log('true || false',resp);
 

@@ -524,7 +524,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
 
   private onPlaybackEnd() {
     console.log('Playback finished');
-    this.SocketRealTimeService.isAudioIsBeingPlaying$.next(false);
+    // this.SocketRealTimeService.isAudioIsBeingPlaying$.next(false);
     // Ensure the audio context is closed or suspended if not playing anymore
     if (this.audioContext.state !== 'closed') {
       // this.audioContext.suspend();  // Suspend or close the AudioContext to save resources
