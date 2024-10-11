@@ -40,5 +40,6 @@ import { InstructionsScreenComponent } from './components/instructions-screen/in
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
+  
 })
 export class InterviewModule { }
