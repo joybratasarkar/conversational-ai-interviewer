@@ -14,6 +14,8 @@ const environmentFileContent = `
 
         test_url_for_ai_interview: '${public_env[environment].test_url_for_ai_interview}',
         socket_ai_interview:'${public_env[environment].socket_ai_interview}',
+        socket_base_url: '${public_env[environment].socket_base_url}',
+        job_base_url1:'${public_env[environment].job_base_url1}',
 
 
 
