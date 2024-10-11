@@ -5,7 +5,7 @@
     "ng": "ng",
     "config": "ts-node ./scripts/setenv.ts",
     "start": "npm run config -- --environment=development && ng serve",
-    "build:development": "npm run config -- --environment=development && ng build --configuration development",
+    "build:development": "npm run config -- --environment=testing && ng build --configuration development",
     "build:testing": "npm run config -- --environment=testing && ng build --configuration testing",
     "build:production": "npm run config -- --environment=production && ng build --configuration production",
     "watch": "ng build --watch --configuration development",

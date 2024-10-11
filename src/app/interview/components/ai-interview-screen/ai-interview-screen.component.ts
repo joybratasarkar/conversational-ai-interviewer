@@ -24,7 +24,6 @@ import { RealtimeSpeechToTextTranscriptionService } from 'src/app/core/services/
 import { VideoRecordingService } from 'src/app/core/services/video-recording.service';
 import { ScreenRecordingService } from 'src/app/core/services/screen-recording.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AwsService } from 'src/app/core/services/aws.service';
 import { SocketRealTimeCommunicationService } from 'src/app/core/services/socket-real-time-communication.service';
 import { MicrophonePermissionDialogComponent } from 'src/app/core/dialog/microphone-permission-dialog/microphone-permission-dialog.component';
 import { InstructionService } from 'src/app/core/services/instruction.service';
@@ -155,7 +154,6 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private _router: Router,
-    private _awsService: AwsService,
     public dialog: MatDialog,
     public RealtimeTranscription: RealtimeSpeechToTextTranscriptionService,
     private VideoRecording: VideoRecordingService,
@@ -221,7 +219,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
 
         this.videoBlob = data?.blob;
         this.videoName = data?.title;
-        this._downloadFile(this.videoBlob, 'video/mp4', this.videoName);
+        // this._downloadFile(this.videoBlob, 'video/mp4', this.videoName);
 
         this.videoBlobUrl = this.sanitizer.bypassSecurityTrustUrl(data.url);
 
@@ -583,83 +581,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     this.ref.detectChanges();
   }
 
-  // Function to download the video recorded data and initiate upload
-  downloadVideoRecordedData() {
-    console.log('Downloading recorded video data...');
 
-    this._downloadFile(this.videoBlob, 'video/mp4', this.videoName);
-  }
-
-  // Function to download the file and initiate the upload process
-  _downloadFile(data: any, type: string, filename: string) {
-    try {
-      const videoFile = new File(
-        [data],
-        `${this.engineer_name.split(' ').join('_')}-interview_video.mp4`,
-        { type: 'video/mp4' }
-      );
-
-      const blob = new Blob([data], { type: type });
-
-      this.getSignedUrlforVideo(videoFile, filename);
-    } catch (err) {
-      console.error('Error processing the download file:', err);
-    }
-  }
-
-  // Function to get signed URL for the video file
-  getSignedUrlforVideo(videoFile: File, filename: string) {
-    console.log('Requesting signed URL for video file...');
-    this._awsService
-      .getSignedUrl('video', filename)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        next: (response: any) => {
-          const data = response?.data;
-          if (data?.signedUrl && data?.fileDatedName) {
-            console.log('Signed URL received:', data.signedUrl);
-
-            this.postVideoToS3(data.signedUrl, videoFile, data.fileDatedName);
-          } else {
-            console.error('Invalid response data:', data);
-          }
-        },
-        error: (err: any) => {
-          console.error('Error getting signed URL:', err);
-        },
-      });
-  }
-
-  // Function to upload the video file to S3 using the signed URL
-  postVideoToS3(url: string, file: File, savedFileName: string) {
-    console.log('Uploading video to S3...');
-    this._awsService
-      .uploadFileToS3(url, file)
-      .pipe(takeUntil(this._unsubscribe$))
-      .subscribe({
-        complete: () => {
-          const videoUrlParts = url.split('?')[0]; // Extract the base URL without query parameters
-
-          const payload = {
-            interaction_id: this.id,
-            links: [videoUrlParts],
-          };
-
-          // Implement your service method to save the video link
-          // this.service.saveVideoLink(payload).subscribe({
-          //   next: (resp: any) => {
-          //     console.log('Video link saved successfully:', resp);
-          //   },
-          //   error: (err: any) => {
-          //     console.error('Error saving video link:', err);
-          //   },
-          // });
-        },
-        error: (err: any) => {
-          console.error('Error uploading video to S3:', err);
-        },
-      });
-  }
 
   ngAfterViewInit(): void {
     this.video = this.videoElement.nativeElement;

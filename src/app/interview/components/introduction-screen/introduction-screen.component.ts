@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnDestroy, OnInit, ViewChild } from '@angular/
 import { NgxCaptureService } from 'ngx-capture';
 import { BehaviorSubject, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
-import { AwsService } from 'src/app/core/services/aws.service';
 import { InstructionService } from 'src/app/core/services/instruction.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InternetSpeedService } from 'src/app/core/services/internet-speed.service';
@@ -41,7 +40,6 @@ export class IntroductionScreenComponent implements OnInit, OnDestroy {
   engineer_id: any;
   constructor(
     private captureService: NgxCaptureService,
-    private _awsService: AwsService,
     private service: InstructionService,
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -157,64 +155,12 @@ export class IntroductionScreenComponent implements OnInit, OnDestroy {
   public handleInitError(error: WebcamInitError): void {
     // this.errors.push(error);
   }
-  saveAndCapture() {
 
 
-    this.comapnyLogo(this.webcamImageToFile)
-    this.showSpinner$.next(true);
-
-  }
-  comapnyLogo(event: any) {
-    let fileElement: any = event;
-
-    // this.formControl['logo'].setErrors(null);
-    this.getSignedUrlforImg(fileElement);
-
-  };
   // Get SignIn URL for logo
-  getSignedUrlforImg(file: any) {
 
-    this._awsService.getSignedUrl('image', file?.name).pipe(takeUntil(this._unsubscribe$)).subscribe({
-      next: (response: any) => {
-
-        const data = response?.data;
-        this.signedUrl = data.signedUrl
-
-        this.postImageToS3(data?.signedUrl, file, data?.fileDatedName)
-      }
-    });
-  };
   // Post Image to S3 bucket
-  postImageToS3(url: string, file: any, savedFileName: string) {
-    const imageUrlParts: any = this.signedUrl.split('.png');
-    const pngImageUrl = imageUrlParts[0] + '.png'; // Add '.png' extension back
-    this._awsService.uploadFileToS3(url, file).pipe(takeUntil(this._unsubscribe$)).subscribe({
-
-      complete: () => {
-        let payload = {
-          user_pic_ai_interview: pngImageUrl
-        }
-
-        
-        this.service.saveProfilePicAiInterview(this.id, this.engineer_id, payload).subscribe({
-          next: (resp: any) => {
-            let interviewInProgress = resp?.data?.interview_data?.ai_interview_status === "not-initiated" ? false : true;
-            
-            localStorage.setItem('interviewInProgress', JSON.stringify(interviewInProgress));
-            
-            // const navigationRoute = interviewInProgress ===false?
-            //   ['introduction-screen', 'ai-interview-screen'] :
-            //   ['introduction-screen', 'start-interview-screen'];
-            const navigationRoute =['introduction-screen','ai-interview-screen']
-            this.route.navigate(navigationRoute, { queryParams: { id: this.id, projectId: this.projectId, engineer_id: this.engineer_id } });
-
-            this.showSpinner$.next(false);
-
-          }
-        })
-      }
-    });
-  }
+ 
   ngOnDestroy(): void {
     this.loadingInternerSpeed$.next(true);
   }

@@ -71,30 +71,7 @@
                     <div class="d-flex justify-content-end mb-3">
                         <button mat-button (click)="takeAgainScreenShot()"
                             class="fs-14 fw-500 color-black bg-pale-yellow cursor-pointer border-radius-20 px-4 py-2 ms-2 me-2 mdc-button mat-unthemed mat-mdc-button-base">Retake</button>
-                        <button mat-button (click)="saveAndCapture()"
-                            class="bg-dodger-blue border-radius-80 d-flex align-items-center justify-content-center  cursor-pointer color-white border-none w-15  fs-14 fw-500 mdc-button mat-unthemed mat-mdc-button-base">
-                            <!-- <span class="d-flex align-items-center">
-                                <span [ngClass]="{'opacity-50': showSpinner$ | async}" class="me-1">Save & Continue</span>
-
-                                <span class="position-relative" *ngIf="showSpinner$ | async">
-                                    <mat-spinner mode="indeterminate" [diameter]="25"></mat-spinner>
-                                    <div id="loading"></div>
-                                </span>
-                            </span> -->
-                            <span class="d-flex align-items-center text-center">
-                                <ng-container *ngIf="(showSpinner$ | async) ; else showQuestionManu">
-                                    <span class="position-relative">
-                                        <!-- <mat-spinner mode="indeterminate" [diameter]="20"></mat-spinner> -->
-                                        <div id="loading"></div>
-                                    </span>
-                            </ng-container>
-                            <ng-template #showQuestionManu>
-                                <span class="cursor-pointer text-center white-space-nowrap">
-                                    Save & Continue
-                                </span>
-                            </ng-template>
-                            </span>
-                        </button>
+                   
 
                     </div>
                     <div class="bg-black border-radius-12 h-70 d-flex justify-content-center overflow-hidden px-4">
