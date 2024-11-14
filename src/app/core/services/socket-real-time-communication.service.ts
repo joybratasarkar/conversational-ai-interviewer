@@ -17,6 +17,7 @@ export class SocketRealTimeCommunicationService {
   projectId: any
   private socket: any;
   private questionAnswerSocket: any;
+  private connectionBargInDetectionSocket: any
   private connectionSilienceDetectionSocket: any
   private clearAudioSegment: any
   public SilienceDetech$ = new BehaviorSubject<any>(false);
@@ -31,7 +32,7 @@ export class SocketRealTimeCommunicationService {
 
   eventDataArray: any[] = [];
   test_url_for_ai_interview = environment.test_url_for_ai_interview;
-  
+
   socket_ai_interview = environment.socket_ai_interview;
   public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
   public resumeUploaded$ = new BehaviorSubject<any>(false);
@@ -62,7 +63,7 @@ export class SocketRealTimeCommunicationService {
   async connectWebSocket(): Promise<void> {
     try {
       // Construct the WebSocket URL
-      let wsUrl = `${this.socket_ai_interview}ws`;
+      let wsUrl = `${this.test_url_for_ai_interview}ws`;
       debugger;
       this.socket = new WebSocket(wsUrl);
 
@@ -86,9 +87,10 @@ export class SocketRealTimeCommunicationService {
       this.socket.onmessage = (event: MessageEvent) => {
         let messageData = JSON.parse(event.data);
         // this.isAudioIsBeingPlaying$.next(true)
+        debugger;
         this.interviewQuestion$.next(messageData?.question)
         this.interviewQuestionCompleteSentence$.next(messageData?.question);
-        
+
         this.resumeUploaded$.next(messageData?.loader)
         // this.speechToText.onOpenSocket(messageData?.question);
 
@@ -110,16 +112,19 @@ export class SocketRealTimeCommunicationService {
       console.error('Error:', error);
     }
   }
+
+
+
   UPLOAD_RESUME() {
     this.socket.send('UPLOAD_RESUME');
 
   }
 
- 
-  submitAnswer(answer:any) {
+
+  submitAnswer(answer: any) {
     this.socket.send(`ANSWER:${answer}`);
   }
-  
+
   fileSent(fileData: any) {
     this.socket.send(fileData);
 
@@ -137,7 +142,7 @@ export class SocketRealTimeCommunicationService {
 
   async connectionSilienceDetection(): Promise<void> {
     try {
-      let wsUrl = `${this.socket_ai_interview}silenceDetection`;
+      let wsUrl = `${this.test_url_for_ai_interview}silenceDetection`;
 
       this.connectionSilienceDetectionSocket = new WebSocket(wsUrl);
 
@@ -193,7 +198,7 @@ export class SocketRealTimeCommunicationService {
 
   async clearAudioSegmentSocket(): Promise<void> {
 
-    let wsUrl = `${this.socket_ai_interview}clearAudioSegment`;
+    let wsUrl = `${this.test_url_for_ai_interview}clearAudioSegment`;
 
     this.clearAudioSegment = new WebSocket(wsUrl);
 
@@ -256,6 +261,73 @@ export class SocketRealTimeCommunicationService {
       this.questionAnswerSocket.close();
     }
   }
+
+
+  async connectionBargInDetection(): Promise<void> {
+    try {
+      let wsUrl = `${this.test_url_for_ai_interview}bargInDetection`;
+
+      this.connectionBargInDetectionSocket = new WebSocket(wsUrl);
+
+      this.connectionBargInDetectionSocket.onopen = () => {
+        console.log('Barge-in detection socket connected');
+      };
+
+      this.connectionBargInDetectionSocket.onmessage = (event: MessageEvent) => {
+        let jsonData = JSON.parse(event.data);
+
+        // Check if a barge-in is detected
+        let barg_in_detected = jsonData.barg_in_detected === true;
+
+        if (barg_in_detected) {
+          console.log('Barge-in detected: User interrupted the AI');
+          // Handle the barge-in event, such as pausing the AI response
+          this.handleBargeInDetected();
+        }
+      };
+
+      this.connectionBargInDetectionSocket.onclose = (event: CloseEvent) => {
+        console.warn(`Barge-in detection WebSocket closed: ${event.reason}`);
+        // Optionally, implement reconnection logic here
+      };
+
+      this.connectionBargInDetectionSocket.onerror = (error: Event) => {
+        console.error('Barge-in detection WebSocket error:', error);
+        this.connectionBargInDetectionSocket.close();
+      };
+    } catch (error) {
+      console.error('Error:', error);
+      // Optionally, implement reconnection logic here
+    }
+  }
+
+  sendBargeInStatus(status: boolean): void {
+    if (this.connectionBargInDetectionSocket && this.connectionBargInDetectionSocket.readyState === WebSocket.OPEN) {
+      const message = JSON.stringify({ barg_in_status: status });
+      this.connectionBargInDetectionSocket.send(message);
+      console.log(`Sent barge-in status to backend: ${status}`);
+    } else {
+      console.warn('Barge-in detection socket is not open');
+    }
+  }
+  sendBargeInAudioBlob(blob: Blob): void {
+    if (this.connectionBargInDetectionSocket && this.connectionBargInDetectionSocket.readyState === WebSocket.OPEN) {
+      
+      const message = JSON.stringify({ blob: blob });
+      this.connectionBargInDetectionSocket.send(message);
+      console.log(`Sent barge-in status to backend: ${status}`);
+    } else {
+      console.warn('Barge-in detection socket is not open');
+    }
+  }
+
+  // Handler for when a barge-in is detected
+  handleBargeInDetected(): void {
+    // Add logic to handle the barge-in, such as stopping AI speech, displaying a notification, etc.
+    console.warn('User has interrupted the AI. Pausing response.');
+    // Example: Stop the AI or take some other action
+  }
+
 }
 
 

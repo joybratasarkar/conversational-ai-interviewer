@@ -148,6 +148,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
   inputValue: string = '';
   public showSpinner$ = new BehaviorSubject<boolean>(false);
+  userAnswer: string = ''; // Bind this to the input field
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -239,6 +240,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
 
     // this.SocketRealTimeService.connectWebSocket();
     this.SocketRealTimeService.connectWebSocket();
+    this.SocketRealTimeService.connectionBargInDetection()
     // this.SocketRealTimeService.ConnectionQuestionAnswerSocket();
 
     this.SocketRealTimeService.interviewQuestion$.subscribe({
@@ -256,6 +258,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       next: (resp: any) => {
 
         this.textToSpeech.speak(resp);
+        this.SocketRealTimeService.sendBargeInStatus(true)
 
       },
     })
@@ -299,6 +302,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
             // this.SocketRealTimeService.sendAnswer(res);
             this.subtitle = '';
             this.textToSpeech.stop()
+            this.SocketRealTimeService.sendBargeInStatus(false)
             this.countdownValueForSentAnswer = 3;
 
             this.countdownIntervalForSentAnswer = setInterval(() => {
@@ -324,6 +328,11 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       });
   }
 
+  sendAnswer()
+  {debugger;
+    this.SocketRealTimeService.submitAnswer(this.userAnswer)
+
+  }
   startCountdown() {
     console.log(`Recording starts in ${this.countdownValue} seconds...`);
 

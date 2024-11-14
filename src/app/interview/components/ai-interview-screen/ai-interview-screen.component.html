@@ -88,6 +88,11 @@
             <p class="mb-16">[PAUSE] 10s Answere Submitted.</p>
            </div>
       </div> -->
+      <div>
+        <input type="text" [(ngModel)]="userAnswer" placeholder="Type your answer here">
+        <button (click)="sendAnswer()">Send Answer</button>
+      </div>
+      
       <div class="p-28 border-gray absolute bottom-0 mb-28 subtitle-section" style="width: 96% !important;">
         <p class="pb-28 border-bottom-gray fs-16 line-h-20 fw-500 text-black ">Your Transcript</p>
         <div class="mt-28 font-ibm subtitle-section-content">
