@@ -67,32 +67,15 @@ export class SocketRealTimeCommunicationService {
       debugger;
       this.socket = new WebSocket(wsUrl);
 
-      // Retrieve user details from local storage (if needed)
-      let user = localStorage.getItem('user');
-      if (user) {
-        let data = JSON.parse(user);
-        this.exam_id = data.exam_id;
-        this.projectId = data.projectId;
-      }
 
       // WebSocket connection opens
       this.socket.onopen = () => {
         console.log('WebSocket connected');
-        // this.isAudioIsBeingPlaying$.next(true)
 
-        // Optionally send some initial data if needed when opening the WebSocket
       };
 
       // Handle incoming messages from the backend WebSocket
       this.socket.onmessage = (event: MessageEvent) => {
-        let messageData = JSON.parse(event.data);
-        // this.isAudioIsBeingPlaying$.next(true)
-        debugger;
-        this.interviewQuestion$.next(messageData?.question)
-        this.interviewQuestionCompleteSentence$.next(messageData?.question);
-
-        this.resumeUploaded$.next(messageData?.loader)
-        // this.speechToText.onOpenSocket(messageData?.question);
 
       };
 
@@ -116,17 +99,17 @@ export class SocketRealTimeCommunicationService {
 
 
   UPLOAD_RESUME() {
-    this.socket.send('UPLOAD_RESUME');
+    // this.socket.send('UPLOAD_RESUME');
 
   }
 
 
   submitAnswer(answer: any) {
-    this.socket.send(`ANSWER:${answer}`);
+    // this.socket.send(`ANSWER:${answer}`);
   }
 
   fileSent(fileData: any) {
-    this.socket.send(fileData);
+    // this.socket.send(fileData);
 
   }
 
@@ -152,22 +135,21 @@ export class SocketRealTimeCommunicationService {
 
       this.connectionSilienceDetectionSocket.onmessage = (event: MessageEvent) => {
         let jsonData = JSON.parse(event.data);
+        console.log('jsonData',jsonData);
+        
+        // let silence_detected = jsonData.silence_detected === true;
+        // let overall_dBFS_int = jsonData.overall_dBFS_int;
 
-        let silence_detected = jsonData.silence_detected === true;
-        let overall_dBFS_int = jsonData.overall_dBFS_int;
 
-        // let silence_detected_3 = jsonData.silence_detected_3 === true;
-        // console.log('overall_dBFS_int', overall_dBFS_int);
+        // if (overall_dBFS_int >= -40) {
+        //   // this.toastr.warning('Too much noise');
+        // }
 
-        if (overall_dBFS_int >= -40) {
-          // this.toastr.warning('Too much noise');
-        }
+        // if (silence_detected) {
+        //   this.sendClearAudio()
 
-        if (silence_detected) {
-          this.sendClearAudio()
-
-          this.SilienceDetech$.next({ bool: true, completeBlob: jsonData.completeBlob });
-        }
+        //   this.SilienceDetech$.next({ bool: true, completeBlob: jsonData.completeBlob });
+        // }
 
       };
 
@@ -204,22 +186,16 @@ export class SocketRealTimeCommunicationService {
 
     this.clearAudioSegment.onopen = () => {
 
-      // this.sendAnswer(test)
-      // this.connectionSilienceDetection();
-
-
     };
 
     this.clearAudioSegment.onmessage = (event: any) => {
-
-      // this.speechToText.onOpenSocket(event.data);
 
     }
 
   }
 
   sendClearAudio() {
-    this.clearAudioSegment.send(JSON.stringify(true));
+    // this.clearAudioSegment.send(JSON.stringify(true));
 
   }
 

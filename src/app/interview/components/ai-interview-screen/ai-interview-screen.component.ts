@@ -607,7 +607,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
 
       this.SocketRealTimeService.connectionSilienceDetection();
 
-      this.SocketRealTimeService.clearAudioSegmentSocket();
+      // this.SocketRealTimeService.clearAudioSegmentSocket();
 
       this.checkAudioMuted();
     }

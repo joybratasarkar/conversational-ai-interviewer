@@ -54,6 +54,8 @@
     <div class="mt-20 py-12 px-16 border-gray border-round-10 h-75vh bg-white relative">
       <p class="content-flex pb-8 border-bottom-gray text-black fs-14 fw-500 line-h-16">
         <span>
+          <span>First question</span>
+
           <ng-container *ngIf="this.SocketRealTimeService.interviewQuestionNumber$ | async as interviewQuestion">
             <p>Q{{interviewQuestion}}</p>
 
