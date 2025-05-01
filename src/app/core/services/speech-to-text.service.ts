@@ -33,70 +33,72 @@ export class RealtimeSpeechToTextTranscriptionService {
 
   }
 
-  async connectWebSocket(): Promise<void> {
-    // this.SocketRealTimeCommunication.connectionSilienceDetection()
+  // async connectWebSocket(): Promise<void> {
+  //   // this.SocketRealTimeCommunication.connectionSilienceDetection()
 
-    try {
-      const response = await fetch(`${this.jobUrl}clients/assembly-token`);
-      const data = await response.json();
+  //   try {
+  //     const response = await fetch(`${this.jobUrl}clients/assembly-token`);
+  //     const data = await response.json();
 
-      if (data.error) {
-        return;
-      }
+  //     if (data.error) {
+  //       return;
+  //     }
 
-      const { token } = data.data;
+  //     const { token } = data.data;
 
-      // this.socket = new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`);
-      // endUtteranceSilenceThreshold: 3000,
+  //     // this.socket = new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`);
+  //     // endUtteranceSilenceThreshold: 3000,
 
-      this.socket = new RealtimeTranscriber({
-        token,
-        disablePartialTranscripts: true,
-        endUtteranceSilenceThreshold: 2000,
-      })
-
-
-
-      this.socket.on("open", (message: any) => {
-        this.startRecording();
-      });
+  //     this.socket = new RealtimeTranscriber({
+  //       token,
+  //       disablePartialTranscripts: true,
+  //       endUtteranceSilenceThreshold: 2000,
+  //     })
 
 
-      this.socket.on('transcript', (info: any) => {
 
-        this.transcriptResponse += info.text; // Correctly concatenate info.text
-
-        console.log('info****************************************************************************outside', this.transcriptResponse);
-        this.subtitle$.next(this.transcriptResponse)
-        this.SocketRealTimeCommunication.SilienceDetech$.pipe(
-          filter((resp) => resp.bool === true)
-        ).subscribe({
-          next: (data: any) => {
-
-            debugger;
-            if (this.transcriptResponse.length && this.transcriptResponse !== undefined) {
-
-              this.translationData$.next(this.transcriptResponse);
-              this.transcriptResponse = '';
-              this.SocketRealTimeCommunication.closeSilienceDetectionWebSocket()
-
-            }
-
-            this.SocketRealTimeCommunication.SilienceDetech$.next({ bool: false, completeBlob: [] });
-          }
-        });
-      });
+  //     this.socket.on("open", (message: any) => {
+  //       this.startRecording();
+  //     });
 
 
-      this.socket.on('onclose', (info: any) => {
-        this.closeWebSocket();
-      });
+  //     this.socket.on('transcript', (info: any) => {
 
-    } catch (error) {
-      console.error('Error:', error);
-    }
-    this.socket.connect();
-  }
+  //       this.transcriptResponse += info.text; // Correctly concatenate info.text
+
+  //       console.log('info****************************************************************************outside', this.transcriptResponse);
+  //       this.subtitle$.next(this.transcriptResponse)
+  //       this.SocketRealTimeCommunication.SilienceDetech$.pipe(
+  //         filter((resp) => resp.bool === true)
+  //       ).subscribe({
+  //         next: (data: any) => {
+
+            
+  //           if (this.transcriptResponse.length && this.transcriptResponse !== undefined) {
+  //             
+  //             this.translationData$.next(this.transcriptResponse);
+  //             this.SocketRealTimeCommunication.sendAnwser(this.transcriptResponse)
+
+  //             this.transcriptResponse = '';
+  //             this.SocketRealTimeCommunication.closeSilienceDetectionWebSocket()
+
+  //           }
+
+  //           this.SocketRealTimeCommunication.SilienceDetech$.next({ bool: false, completeBlob: [] });
+  //         }
+  //       });
+  //     });
+
+
+  //     this.socket.on('onclose', (info: any) => {
+  //       this.closeWebSocket();
+  //     });
+
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  //   this.socket.connect();
+  // }
 
 
   async startRecording(): Promise<void> {
@@ -111,19 +113,19 @@ export class RealtimeSpeechToTextTranscriptionService {
         timeSlice: 1000,
         ondataavailable: async (blob) => {
 
-          this.sendAudioChunk(blob)
-          this.SocketRealTimeCommunication.sendBargeInAudioBlob(blob)
-          this.SocketRealTimeCommunication.isAudioIsBeingPlaying$.pipe(filter((resp) => resp === false)
-          ).subscribe({
-            next: (resp: any) => {
-              // this.socket?.send(blob);
-
+          // this.sendAudioChunk(blob)
+          // this.SocketRealTimeCommunication.sendBargeInAudioBlob(blob)
+          // this.SocketRealTimeCommunication.isAudioIsBeingPlaying$.pipe(filter((resp) => resp === false)
+          // ).subscribe({
+          //   next: (resp: any) => {
+          //     // this.socket?.send(blob);
+              
               this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob);
 
-              console.log('true || false', resp);
+              // console.log('true || false', resp);
 
-            }
-          })
+          //   }
+          // })
           // this.SocketRealTimeCommunication.sendConnectionSilience3SecondsDetectionSocket(blob);
 
         }
@@ -141,47 +143,9 @@ export class RealtimeSpeechToTextTranscriptionService {
   }
 
 
-  private async getFirstBytes(blob: Blob, length: number): Promise<Uint8Array> {
-    const arrayBuffer = await blob.slice(0, length).arrayBuffer();
-    return new Uint8Array(arrayBuffer);
-  }
 
 
 
-
-
-  private areArraysEqual(array1: Uint8Array, array2: Uint8Array): boolean {
-    if (array1.length !== array2.length) {
-      return false;
-    }
-    for (let i = 0; i < array1.length; i++) {
-      if (array1[i] !== array2[i]) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-
-  detectNonSpeech(blob: Blob) {
-    const audioContext = new AudioContext();
-    const fileReader = new FileReader();
-    fileReader.onload = async () => {
-      const arrayBuffer = fileReader.result as ArrayBuffer;
-      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-      // Analyze audioBuffer to detect non-speech portions
-      const channelData = audioBuffer.getChannelData(0); // Assuming mono audio
-      // Example: Simple average volume threshold for silence detection
-      const rms = Math.sqrt(channelData.reduce((acc, val) => acc + val * val, 0) / channelData.length);
-      const threshold = 0.01; // Adjust according to your audio characteristics
-
-      if (rms < threshold) {
-        console.log('Detected non-speech portion');
-      }
-    };
-
-    fileReader.readAsArrayBuffer(blob);
-  }
 
 
 

@@ -28,6 +28,7 @@ import { SocketRealTimeCommunicationService } from 'src/app/core/services/socket
 import { MicrophonePermissionDialogComponent } from 'src/app/core/dialog/microphone-permission-dialog/microphone-permission-dialog.component';
 import { InstructionService } from 'src/app/core/services/instruction.service';
 import { TextToSpeechService } from 'src/app/core/services/text-to-speech.service';
+import { SpeechRecognitionService } from 'src/app/core/services/speechRecognitionService';
 
 type RecordingState = 'NONE' | 'RECORDING' | 'RECORDED';
 declare global {
@@ -149,7 +150,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   inputValue: string = '';
   public showSpinner$ = new BehaviorSubject<boolean>(false);
   userAnswer: string = ''; // Bind this to the input field
-
+  private speechSubscription: Subscription | undefined;
   constructor(
     private sanitizer: DomSanitizer,
     private activatedRoute: ActivatedRoute,
@@ -159,6 +160,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     public RealtimeTranscription: RealtimeSpeechToTextTranscriptionService,
     private VideoRecording: VideoRecordingService,
     private ref: ChangeDetectorRef,
+    private speechReco:SpeechRecognitionService,
     // private speechToText: TextToSpeechService,
     private ScreenRecordingService: ScreenRecordingService,
     public SocketRealTimeService: SocketRealTimeCommunicationService,
@@ -237,10 +239,14 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   ngOnInit(): void {
     this.start();
     this.startBlinking();
+    this.RealtimeTranscription.startRecording();
+this.startListening()
 
     // this.SocketRealTimeService.connectWebSocket();
     this.SocketRealTimeService.connectWebSocket();
-    this.SocketRealTimeService.connectionBargInDetection()
+    // this.SocketRealTimeService.connectionBargInDetection()
+    this.SocketRealTimeService.clearAudioSegmentSocket();
+
     // this.SocketRealTimeService.ConnectionQuestionAnswerSocket();
 
     this.SocketRealTimeService.interviewQuestion$.subscribe({
@@ -302,7 +308,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
             // this.SocketRealTimeService.sendAnswer(res);
             this.subtitle = '';
             this.textToSpeech.stop()
-            this.SocketRealTimeService.sendBargeInStatus(false)
+            // this.SocketRealTimeService.sendBargeInStatus(false)
             this.countdownValueForSentAnswer = 3;
 
             this.countdownIntervalForSentAnswer = setInterval(() => {
@@ -328,8 +334,50 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       });
   }
 
+
+  startListening() {
+    this.speechSubscription = this.speechReco.getTranscript({ locale: 'en-US' }).subscribe({
+      next: (text) => {
+         // Will pause here whenever new text is emitted
+        console.log('Transcript:', text);
+        this.RealtimeTranscription.subtitle$.next(text)
+
+        this.RealtimeTranscription.subtitle$.next(text)
+        this.SocketRealTimeService.SilienceDetech$.pipe(
+          filter((resp) => resp.bool === true)
+        ).subscribe({
+          next: (data: any) => {
+            
+            
+            if (text.length && text !== undefined) {
+              
+              this.RealtimeTranscription.translationData$.next(text);
+              this.speechReco.clearTranscript();
+              // this.SocketRealTimeService.closeSilienceDetectionWebSocket()
+              
+              this.SocketRealTimeService.sendAnswer(text)
+              text='';
+            }
+
+            this.SocketRealTimeService.SilienceDetech$.next({ bool: false, completeBlob: [] });
+          }
+        });
+      },
+      error: (err) => {
+         // Pauses on any error
+        console.error('Speech recognition error:', err);
+      }
+    });
+  }
+
+  stopListening() {
+    if (this.speechSubscription) {
+      this.speechSubscription.unsubscribe();
+      console.log('Speech recognition stopped.');
+    }
+  }
   sendAnswer()
-  {debugger;
+  {
     this.SocketRealTimeService.submitAnswer(this.userAnswer)
 
   }
@@ -603,11 +651,10 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       this.showAudioRecorder = true;
       this.ShowstartAudioRecording = false;
 
-      this.RealtimeTranscription.connectWebSocket();
-
+      // this.RealtimeTranscription.connectWebSocket();
+      
       this.SocketRealTimeService.connectionSilienceDetection();
 
-      // this.SocketRealTimeService.clearAudioSegmentSocket();
 
       this.checkAudioMuted();
     }

@@ -36,6 +36,7 @@ export class SocketRealTimeCommunicationService {
   socket_ai_interview = environment.socket_ai_interview;
   public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
   public resumeUploaded$ = new BehaviorSubject<any>(false);
+  canShowNoiseWarning = true;
 
   constructor(private activatedRoute: ActivatedRoute,
     private speechToText: TextToSpeechService,
@@ -64,19 +65,23 @@ export class SocketRealTimeCommunicationService {
     try {
       // Construct the WebSocket URL
       let wsUrl = `${this.test_url_for_ai_interview}ws`;
-      debugger;
+      
       this.socket = new WebSocket(wsUrl);
 
 
       // WebSocket connection opens
       this.socket.onopen = () => {
         console.log('WebSocket connected');
-
+this.socket.send('StartInterview')
       };
 
       // Handle incoming messages from the backend WebSocket
       this.socket.onmessage = (event: MessageEvent) => {
-
+        let messageData = JSON.parse(event.data);
+        // this.isAudioIsBeingPlaying$.next(true)
+        
+        this.interviewQuestion$.next(messageData?.question)
+        this.interviewQuestionCompleteSentence$.next(messageData?.question);
       };
 
       // Handle WebSocket close events
@@ -97,7 +102,13 @@ export class SocketRealTimeCommunicationService {
   }
 
 
-
+sendAnswer(answer: any) {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify(answer));
+    } else {
+      console.warn('WebSocket is not open. Cannot send answer.');
+    }
+  }
   UPLOAD_RESUME() {
     // this.socket.send('UPLOAD_RESUME');
 
@@ -135,21 +146,28 @@ export class SocketRealTimeCommunicationService {
 
       this.connectionSilienceDetectionSocket.onmessage = (event: MessageEvent) => {
         let jsonData = JSON.parse(event.data);
-        console.log('jsonData',jsonData);
         
-        // let silence_detected = jsonData.silence_detected === true;
-        // let overall_dBFS_int = jsonData.overall_dBFS_int;
+        let silence_detected = jsonData.silence_detected === true;
+        let overall_dBFS_int = jsonData.overall_dBFS_int;
 
 
-        // if (overall_dBFS_int >= -40) {
-        //   // this.toastr.warning('Too much noise');
-        // }
 
-        // if (silence_detected) {
-        //   this.sendClearAudio()
+        if (overall_dBFS_int <= -20 && this.canShowNoiseWarning) {
+          this.toastr.warning('Too much noise');
+          this.canShowNoiseWarning = false;
+        
+          setTimeout(() => {
+            this.canShowNoiseWarning = true;
+          }, 5000); 
+        }
+        
 
-        //   this.SilienceDetech$.next({ bool: true, completeBlob: jsonData.completeBlob });
-        // }
+        if (silence_detected) {
+          this.sendClearAudio()
+          console.log('jsonData',jsonData);
+
+          this.SilienceDetech$.next({ bool: true, completeBlob: jsonData.completeBlob });
+        }
 
       };
 
@@ -189,13 +207,16 @@ export class SocketRealTimeCommunicationService {
     };
 
     this.clearAudioSegment.onmessage = (event: any) => {
+      let jsonData = JSON.parse(event.data);
+      console.log('jsonData',jsonData);
+      
 
     }
 
   }
 
   sendClearAudio() {
-    // this.clearAudioSegment.send(JSON.stringify(true));
+    this.clearAudioSegment.send(JSON.stringify(true));
 
   }
 

@@ -19,6 +19,7 @@ export class SpeechRecognitionService {
         const cache: { [key: string]: string } = {};
     
         return new Observable(observer => {
+            
             if (cache[locale]) {
                 observer.next(cache[locale]);
                 observer.complete();
@@ -26,7 +27,7 @@ export class SpeechRecognitionService {
             }
             // @ts-ignore
             const SpeechRecognition: any = window['webkitSpeechRecognition'];
-    
+            
             if (!SpeechRecognition) {
                 observer.error('SpeechRecognition is not supported on this browser.');
                 return;
@@ -36,18 +37,21 @@ export class SpeechRecognitionService {
             speechRecognition.continuous = true;
             speechRecognition.interimResults = true;
             speechRecognition.lang = locale;
-    
+            
             let interimTranscript = '';
             let transcriptArray: string[] = [];
-    
+            
             speechRecognition.onresult = (event: any) => {
                 for (let i = event.resultIndex; i < event.results.length; ++i) {
                     const transcript = event.results[i][0].transcript.trim();
                     if (event.results[i].isFinal) {
+                        
                         transcriptArray.push(transcript);
-                        this.finalTranscript = transcriptArray.join(' ');                        
+                        this.finalTranscript = transcriptArray.join(' ');  
+                                              
                         this._ngZone.run(() => observer.next(this.finalTranscript.trim()));
                         cache[locale] = this.finalTranscript.trim();
+                        
                     }
                     else{
                         this._ngZone.run(() => observer.next(this.finalTranscript.trim()));
@@ -60,4 +64,8 @@ export class SpeechRecognitionService {
             return () => speechRecognition.abort();
         });
     }
+    clearTranscript(): void {
+        this.finalTranscript = '';
+      }
+      
 }
