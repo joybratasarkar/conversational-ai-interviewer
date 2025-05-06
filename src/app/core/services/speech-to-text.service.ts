@@ -33,72 +33,72 @@ export class RealtimeSpeechToTextTranscriptionService {
 
   }
 
-  // async connectWebSocket(): Promise<void> {
-  //   // this.SocketRealTimeCommunication.connectionSilienceDetection()
+  async connectWebSocket(): Promise<void> {
+    // this.SocketRealTimeCommunication.connectionSilienceDetection()
 
-  //   try {
-  //     const response = await fetch(`${this.jobUrl}clients/assembly-token`);
-  //     const data = await response.json();
+    try {
+      const response = await fetch(`${this.jobUrl}clients/assembly-token`);
+      const data = await response.json();
 
-  //     if (data.error) {
-  //       return;
-  //     }
+      if (data.error) {
+        return;
+      }
 
-  //     const { token } = data.data;
+      const { token } = data.data;
 
-  //     // this.socket = new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`);
-  //     // endUtteranceSilenceThreshold: 3000,
+      // this.socket = new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`);
+      // endUtteranceSilenceThreshold: 3000,
 
-  //     this.socket = new RealtimeTranscriber({
-  //       token,
-  //       disablePartialTranscripts: true,
-  //       endUtteranceSilenceThreshold: 2000,
-  //     })
-
-
-
-  //     this.socket.on("open", (message: any) => {
-  //       this.startRecording();
-  //     });
+      this.socket = new RealtimeTranscriber({
+        token,
+        disablePartialTranscripts: true,
+        endUtteranceSilenceThreshold: 2000,
+      })
 
 
-  //     this.socket.on('transcript', (info: any) => {
 
-  //       this.transcriptResponse += info.text; // Correctly concatenate info.text
+      this.socket.on("open", (message: any) => {
+        this.startRecording();
+      });
 
-  //       console.log('info****************************************************************************outside', this.transcriptResponse);
-  //       this.subtitle$.next(this.transcriptResponse)
-  //       this.SocketRealTimeCommunication.SilienceDetech$.pipe(
-  //         filter((resp) => resp.bool === true)
-  //       ).subscribe({
-  //         next: (data: any) => {
+
+      this.socket.on('transcript', (info: any) => {
+
+        this.transcriptResponse += info.text; // Correctly concatenate info.text
+
+        console.log('info****************************************************************************outside', this.transcriptResponse);
+        this.subtitle$.next(this.transcriptResponse)
+        this.SocketRealTimeCommunication.SilienceDetech$.pipe(
+          filter((resp) => resp.bool === true)
+        ).subscribe({
+          next: (data: any) => {
 
             
-  //           if (this.transcriptResponse.length && this.transcriptResponse !== undefined) {
-  //             
-  //             this.translationData$.next(this.transcriptResponse);
-  //             this.SocketRealTimeCommunication.sendAnwser(this.transcriptResponse)
+            if (this.transcriptResponse.length && this.transcriptResponse !== undefined) {
+              
+              this.translationData$.next(this.transcriptResponse);
+              this.SocketRealTimeCommunication.sendAnswer(this.transcriptResponse)
 
-  //             this.transcriptResponse = '';
-  //             this.SocketRealTimeCommunication.closeSilienceDetectionWebSocket()
+              this.transcriptResponse = '';
+              this.SocketRealTimeCommunication.closeSilienceDetectionWebSocket()
 
-  //           }
+            }
 
-  //           this.SocketRealTimeCommunication.SilienceDetech$.next({ bool: false, completeBlob: [] });
-  //         }
-  //       });
-  //     });
+            this.SocketRealTimeCommunication.SilienceDetech$.next({ bool: false, completeBlob: [] });
+          }
+        });
+      });
 
 
-  //     this.socket.on('onclose', (info: any) => {
-  //       this.closeWebSocket();
-  //     });
+      this.socket.on('onclose', (info: any) => {
+        this.closeWebSocket();
+      });
 
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  //   this.socket.connect();
-  // }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    this.socket.connect();
+  }
 
 
   async startRecording(): Promise<void> {
@@ -113,20 +113,18 @@ export class RealtimeSpeechToTextTranscriptionService {
         timeSlice: 1000,
         ondataavailable: async (blob) => {
 
-          // this.sendAudioChunk(blob)
-          // this.SocketRealTimeCommunication.sendBargeInAudioBlob(blob)
-          // this.SocketRealTimeCommunication.isAudioIsBeingPlaying$.pipe(filter((resp) => resp === false)
-          // ).subscribe({
-          //   next: (resp: any) => {
-          //     // this.socket?.send(blob);
-              
-              this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob);
-
-              // console.log('true || false', resp);
-
-          //   }
-          // })
-          // this.SocketRealTimeCommunication.sendConnectionSilience3SecondsDetectionSocket(blob);
+          //  this.sendAudioChunk(blob)
+           this.SocketRealTimeCommunication.sendBargeInAudioBlob(blob)
+           this.SocketRealTimeCommunication.isAudioIsBeingPlaying$.pipe(filter((resp) => resp === false)
+           ).subscribe({
+             next: (resp: any) => {
+               this.socket?.send(blob);
+          
+          this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob)
+          // console.log('true || false', resp)
+             }
+           })
+          //  this.SocketRealTimeCommunication.sendConnectionSilience3SecondsDetectionSocket(blob);
 
         }
       });

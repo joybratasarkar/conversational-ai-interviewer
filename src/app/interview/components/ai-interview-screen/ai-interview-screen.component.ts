@@ -240,7 +240,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     this.start();
     this.startBlinking();
     this.RealtimeTranscription.startRecording();
-this.startListening()
+// this.startListening()
 
     // this.SocketRealTimeService.connectWebSocket();
     this.SocketRealTimeService.connectWebSocket();
@@ -354,6 +354,9 @@ this.startListening()
               this.RealtimeTranscription.translationData$.next(text);
               this.speechReco.clearTranscript();
               // this.SocketRealTimeService.closeSilienceDetectionWebSocket()
+              this.showPause = false;
+              this.subtitle = text;
+              console.log('this.subtitle',this.subtitle);
               
               this.SocketRealTimeService.sendAnswer(text)
               text='';
@@ -651,7 +654,7 @@ this.startListening()
       this.showAudioRecorder = true;
       this.ShowstartAudioRecording = false;
 
-      // this.RealtimeTranscription.connectWebSocket();
+      this.RealtimeTranscription.connectWebSocket();
       
       this.SocketRealTimeService.connectionSilienceDetection();
 
