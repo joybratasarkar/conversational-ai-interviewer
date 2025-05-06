@@ -654,7 +654,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       this.showAudioRecorder = true;
       this.ShowstartAudioRecording = false;
 
-      this.RealtimeTranscription.connectWebSocket();
+      // this.RealtimeTranscription.connectWebSocket();
       
       this.SocketRealTimeService.connectionSilienceDetection();
 
