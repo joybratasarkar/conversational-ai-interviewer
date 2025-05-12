@@ -60,58 +60,58 @@ export class SocketRealTimeCommunicationService {
     return window.btoa(stringText);
   }
 
-  async connectWebSocket(): Promise<void> {
-    try {
-      // Construct the WebSocket URL
-      let wsUrl = `${this.test_url_for_ai_interview}ws`;
-      debugger;
-      this.socket = new WebSocket(wsUrl);
+  // async connectWebSocket(): Promise<void> {
+  //   try {
+  //     // Construct the WebSocket URL
+  //     let wsUrl = `${this.test_url_for_ai_interview}ws`;
+  //     debugger;
+  //     this.socket = new WebSocket(wsUrl);
 
-      // Retrieve user details from local storage (if needed)
-      let user = localStorage.getItem('user');
-      if (user) {
-        let data = JSON.parse(user);
-        this.exam_id = data.exam_id;
-        this.projectId = data.projectId;
-      }
+  //     // Retrieve user details from local storage (if needed)
+  //     let user = localStorage.getItem('user');
+  //     if (user) {
+  //       let data = JSON.parse(user);
+  //       this.exam_id = data.exam_id;
+  //       this.projectId = data.projectId;
+  //     }
 
-      // WebSocket connection opens
-      this.socket.onopen = () => {
-        console.log('WebSocket connected');
-        // this.isAudioIsBeingPlaying$.next(true)
+  //     // WebSocket connection opens
+  //     this.socket.onopen = () => {
+  //       console.log('WebSocket connected');
+  //       // this.isAudioIsBeingPlaying$.next(true)
 
-        // Optionally send some initial data if needed when opening the WebSocket
-      };
+  //       // Optionally send some initial data if needed when opening the WebSocket
+  //     };
 
-      // Handle incoming messages from the backend WebSocket
-      this.socket.onmessage = (event: MessageEvent) => {
-        let messageData = JSON.parse(event.data);
-        // this.isAudioIsBeingPlaying$.next(true)
-        debugger;
-        this.interviewQuestion$.next(messageData?.question)
-        this.interviewQuestionCompleteSentence$.next(messageData?.question);
+  //     // Handle incoming messages from the backend WebSocket
+  //     this.socket.onmessage = (event: MessageEvent) => {
+  //       let messageData = JSON.parse(event.data);
+  //       // this.isAudioIsBeingPlaying$.next(true)
+  //       debugger;
+  //       this.interviewQuestion$.next(messageData?.question)
+  //       this.interviewQuestionCompleteSentence$.next(messageData?.question);
 
-        this.resumeUploaded$.next(messageData?.loader)
-        // this.speechToText.onOpenSocket(messageData?.question);
+  //       this.resumeUploaded$.next(messageData?.loader)
+  //       // this.speechToText.onOpenSocket(messageData?.question);
 
-      };
+  //     };
 
-      // Handle WebSocket close events
-      this.socket.onclose = (event: CloseEvent) => {
-        console.warn(`WebSocket closed: ${event.reason}`);
-        this.reconnectWebSocket();  // Optionally handle reconnection
-      };
+  //     // Handle WebSocket close events
+  //     this.socket.onclose = (event: CloseEvent) => {
+  //       console.warn(`WebSocket closed: ${event.reason}`);
+  //       this.reconnectWebSocket();  // Optionally handle reconnection
+  //     };
 
-      // Handle WebSocket errors
-      this.socket.onerror = (error: Event) => {
-        console.error('WebSocket error:', error);
-        this.socket.close();  // Close the socket on error
-      };
+  //     // Handle WebSocket errors
+  //     this.socket.onerror = (error: Event) => {
+  //       console.error('WebSocket error:', error);
+  //       this.socket.close();  // Close the socket on error
+  //     };
 
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // }
 
 
 
@@ -134,7 +134,7 @@ export class SocketRealTimeCommunicationService {
   reconnectWebSocket(): void {
     setTimeout(() => {
       console.log('Attempting to reconnect...');
-      this.connectWebSocket();
+      // this.connectWebSocket();
     }, this.reconnectDelay);
   }
 

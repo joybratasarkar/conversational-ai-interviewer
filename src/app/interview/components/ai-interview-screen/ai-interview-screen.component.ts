@@ -239,7 +239,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     this.startBlinking();
 
     // this.SocketRealTimeService.connectWebSocket();
-    this.SocketRealTimeService.connectWebSocket();
+    // this.SocketRealTimeService.connectWebSocket();
     this.SocketRealTimeService.connectionBargInDetection()
     // this.SocketRealTimeService.ConnectionQuestionAnswerSocket();
 
