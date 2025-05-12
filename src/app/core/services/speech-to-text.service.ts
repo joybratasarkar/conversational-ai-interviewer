@@ -118,7 +118,7 @@ export class RealtimeSpeechToTextTranscriptionService {
            this.SocketRealTimeCommunication.isAudioIsBeingPlaying$.pipe(filter((resp) => resp === false)
            ).subscribe({
              next: (resp: any) => {
-               this.socket?.send(blob);
+              //  this.socket?.send(blob);
           
           this.SocketRealTimeCommunication.sendConnectionSilienceDetectionSocket(blob)
           // console.log('true || false', resp)

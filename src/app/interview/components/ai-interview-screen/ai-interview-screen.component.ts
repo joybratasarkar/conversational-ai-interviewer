@@ -239,11 +239,11 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   ngOnInit(): void {
     this.start();
     this.startBlinking();
-    this.RealtimeTranscription.startRecording();
+    // this.RealtimeTranscription.startRecording();
 // this.startListening()
 
     // this.SocketRealTimeService.connectWebSocket();
-    this.SocketRealTimeService.connectWebSocket();
+    // this.SocketRealTimeService.connectWebSocket();
     // this.SocketRealTimeService.connectionBargInDetection()
     this.SocketRealTimeService.clearAudioSegmentSocket();
 
@@ -654,7 +654,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       this.showAudioRecorder = true;
       this.ShowstartAudioRecording = false;
 
-      // this.RealtimeTranscription.connectWebSocket();
+      this.RealtimeTranscription.connectWebSocket();
       
       this.SocketRealTimeService.connectionSilienceDetection();
 
