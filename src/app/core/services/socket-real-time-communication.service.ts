@@ -68,7 +68,7 @@ export class SocketRealTimeCommunicationService {
     try {
       // Construct the WebSocket URL
       let wsUrl = `${this.test_url_for_ai_interview}ws`;
-debugger
+
       this.socket = new WebSocket(wsUrl);
 
 
