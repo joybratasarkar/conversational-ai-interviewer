@@ -6,13 +6,16 @@
 
                 <div class="p-16 border-round-10 border-hazy-indigo bg-white mb-8">
                     <p class="mb-16 flex align-center text-deep-blue fw-600 fs-16 line-h-20">
-                        <img src="../../../../assets/images/new-flow/lightning-blue-icon.svg" alt="lightning-blue-icon" width="20px" height="20px" class="me-4">
+                        <img src="../../../../assets/images/new-flow/lightning-blue-icon.svg" alt="lightning-blue-icon"
+                            width="20px" height="20px" class="me-4">
                         Here are a few tips to increase your success rate:
                     </p>
                     <ul class="ms-4 text-deep-twilight list-none fs-14 fw-400 line-h-18">
                         <li class="mb-8 flex align-center">
-                            <img src="../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
-                            <span>Make sure you are in a quiet, distraction-free area and hold <span class="block">eye contact with the camera.</span></span>
+                            <img src="../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px"
+                                height="18px" class="me-8">
+                            <span>Make sure you are in a quiet, distraction-free area and hold <span class="block">eye
+                                    contact with the camera.</span></span>
                         </li>
                         <!-- ...other list items... -->
                     </ul>
@@ -20,14 +23,16 @@
 
                 <div class="p-16 border-round-10 border-hazy-indigo bg-white">
                     <p class="mb-16 flex align-center text-rosy-dawn fw-600 fs-16 line-h-20">
-                        <img src="../../../../assets/images/new-flow/shield-red-icon.svg" alt="shield-red-icon" width="20px" height="20px" class="me-4">
+                        <img src="../../../../assets/images/new-flow/shield-red-icon.svg" alt="shield-red-icon"
+                            width="20px" height="20px" class="me-4">
                         Our proctoring steps for ensuring a violation-free screening:
                     </p>
                     <ul class="ms-4 text-deep-twilight list-none fs-14 fw-400 line-h-18">
-                        <!-- Proctoring steps -->
                         <li class="mb-8 flex align-center">
-                            <img src="../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px" height="18px" class="me-8">
-                            <span> Make sure you are in a quiet, distraction-free area and hold eye contact with the camera.</span>
+                            <img src="../../../../assets/images/new-flow/check-circle-grey-icon.svg" alt="" width="18px"
+                                height="18px" class="me-8">
+                            <span> Make sure you are in a quiet, distraction-free area and hold eye contact with the
+                                camera.</span>
                         </li>
                         <!-- ...other list items... -->
                     </ul>
@@ -36,21 +41,26 @@
         </div>
 
         <div class="p-38 bg-white border-round-24-left-corner border-left-foggy-charcoal relative">
-            <p class="fw-600 fs-28 line-h-28 pb-8 mb-24 border-bottom-muted-black">👋️ Welcome, <span class="text-gradient">{{userFirstName | titlecase}}</span></p>
+            <p class="fw-600 fs-28 line-h-28 pb-8 mb-24 border-bottom-muted-black">👋️ Welcome, <span
+                    class="text-gradient">{{userFirstName | titlecase}}</span></p>
             <p class="fw-500 fs-24 line-h-36 text-black">Let's get started</p>
-            <p class="fw-400 fs-16 line-h-22 mt-8 text-deep-twilight mb-28">This screening will cover your communication skills as well as your 
-                <span class="block">technical skills for the role of <span class="fw-600 text-black">'Full Stack Web Developer'</span></span>
+            <p class="fw-400 fs-16 line-h-22 mt-8 text-deep-twilight mb-28">
+                This AI-powered interview system presents a fixed set of questions with built-in pause detection to
+                monitor response flow.
+                <span class="block">
+                    While the current version does not use an intelligent language model (LLM) to evaluate answers,
+                    integration of advanced LLM capabilities is planned for upcoming releases to enable real-time,
+                    dynamic assessment.
+                </span>
             </p>
 
-            <!-- Upload Button and File Input -->
 
-              
-
-            <div class="p-10 border-blue-fog bg-soft-breeze border-round-12 mt-16 mt-16">
+            <div class="p-10 border-blue-fog bg-soft-breeze border-round-12 mt-16">
                 <p class="mb-8"><span class="text-gradient fw-600 fs-28 line-h-36">30 mins</span></p>
                 <p class="mb-8 text-deep-twilight fw-400 fs-14 line-h-20">Section 1</p>
                 <p class="mb-8"><span class="text-gradient fw-600 fs-28 line-h-36">Technical Test</span></p>
-                <p class="content-flex text-deep-twilight fw-400 fs-16 line-h-20"><span>4 Questions</span> <span>3 mins each</span></p>
+                <p class="content-flex text-deep-twilight fw-400 fs-16 line-h-20"><span>4 Questions</span> <span>3 mins
+                        each</span></p>
             </div>
 
             <p-button label="Start Interview" (click)="startInterview()" class="start-interview-btn"></p-button>
