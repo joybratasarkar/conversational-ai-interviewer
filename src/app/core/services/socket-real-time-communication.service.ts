@@ -65,23 +65,27 @@ export class SocketRealTimeCommunicationService {
     try {
       // Construct the WebSocket URL
       let wsUrl = `${this.test_url_for_ai_interview}ws`;
-      
+
       this.socket = new WebSocket(wsUrl);
 
 
       // WebSocket connection opens
       this.socket.onopen = () => {
         console.log('WebSocket connected');
-this.socket.send('StartInterview')
+
+        this.socket.send(JSON.stringify({
+          type: 'StartInterview',
+          data: ''
+        }));
       };
 
       // Handle incoming messages from the backend WebSocket
       this.socket.onmessage = (event: MessageEvent) => {
         let messageData = JSON.parse(event.data);
         // this.isAudioIsBeingPlaying$.next(true)
-        
-        this.interviewQuestion$.next(messageData?.question)
-        this.interviewQuestionCompleteSentence$.next(messageData?.question);
+
+        this.interviewQuestion$.next(messageData?.data)
+        this.interviewQuestionCompleteSentence$.next(messageData?.data);
       };
 
       // Handle WebSocket close events
@@ -102,8 +106,9 @@ this.socket.send('StartInterview')
   }
 
 
-sendAnswer(answer: any) {
+  sendAnswer(answer: any) {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      debugger;
       this.socket.send(JSON.stringify(answer));
     } else {
       console.warn('WebSocket is not open. Cannot send answer.');
@@ -116,7 +121,8 @@ sendAnswer(answer: any) {
 
 
   submitAnswer(answer: any) {
-    // this.socket.send(`ANSWER:${answer}`);
+    debugger;
+    this.socket.send(JSON.stringify(answer));
   }
 
   fileSent(fileData: any) {
@@ -145,31 +151,33 @@ sendAnswer(answer: any) {
       };
 
       this.connectionSilienceDetectionSocket.onmessage = (event: MessageEvent) => {
-        let jsonData = JSON.parse(event.data);
-        
-        let silence_detected = jsonData.silence_detected === true;
-        let overall_dBFS_int = jsonData.overall_dBFS_int;
+        try {
+          console.log(event?.data)
+          let jsonData = event?.data;
+          const jsonObject = JSON.parse(jsonData);
+          // let silence_detected = jsonObject?.silence_detected === true;
 
+          // let overall_dBFS_int = jsonData.overall_dBFS_int;
 
+          // if (overall_dBFS_int <= -20 && this.canShowNoiseWarning) {
+          //   this.toastr.warning('Too much noise');
+          //   this.canShowNoiseWarning = false;
+          //   setTimeout(() => this.canShowNoiseWarning = true, 5000);
+          // }
 
-        if (overall_dBFS_int <= -20 && this.canShowNoiseWarning) {
-          this.toastr.warning('Too much noise');
-          this.canShowNoiseWarning = false;
-        
-          setTimeout(() => {
-            this.canShowNoiseWarning = true;
-          }, 5000); 
+          if (jsonObject?.silence_detected == true) {
+            // this.sendClearAudio();
+            console.log('Silence detected:', jsonObject?.silence_detected);
+
+            // console.log('jsonData', jsonData);
+            this.SilienceDetech$.next({ bool: true, completeBlob: '' });
+          }
+
+        } catch (e) {
+          console.warn('Non-JSON message:', event.data); // for debugging
         }
-        
-
-        if (silence_detected) {
-          this.sendClearAudio()
-          console.log('jsonData',jsonData);
-
-          this.SilienceDetech$.next({ bool: true, completeBlob: jsonData.completeBlob });
-        }
-
       };
+
 
       this.connectionSilienceDetectionSocket.onclose = (event: CloseEvent) => {
         console.warn(`Silence detection WebSocket closed: ${event.reason}`);
@@ -196,29 +204,6 @@ sendAnswer(answer: any) {
   }
 
 
-  async clearAudioSegmentSocket(): Promise<void> {
-
-    let wsUrl = `${this.test_url_for_ai_interview}clearAudioSegment`;
-
-    this.clearAudioSegment = new WebSocket(wsUrl);
-
-    this.clearAudioSegment.onopen = () => {
-
-    };
-
-    this.clearAudioSegment.onmessage = (event: any) => {
-      let jsonData = JSON.parse(event.data);
-      console.log('jsonData',jsonData);
-      
-
-    }
-
-  }
-
-  sendClearAudio() {
-    this.clearAudioSegment.send(JSON.stringify(true));
-
-  }
 
 
 
@@ -260,63 +245,8 @@ sendAnswer(answer: any) {
   }
 
 
-  async connectionBargInDetection(): Promise<void> {
-    try {
-      let wsUrl = `${this.test_url_for_ai_interview}bargInDetection`;
 
-      this.connectionBargInDetectionSocket = new WebSocket(wsUrl);
 
-      this.connectionBargInDetectionSocket.onopen = () => {
-        console.log('Barge-in detection socket connected');
-      };
-
-      this.connectionBargInDetectionSocket.onmessage = (event: MessageEvent) => {
-        let jsonData = JSON.parse(event.data);
-
-        // Check if a barge-in is detected
-        let barg_in_detected = jsonData.barg_in_detected === true;
-
-        if (barg_in_detected) {
-          console.log('Barge-in detected: User interrupted the AI');
-          // Handle the barge-in event, such as pausing the AI response
-          this.handleBargeInDetected();
-        }
-      };
-
-      this.connectionBargInDetectionSocket.onclose = (event: CloseEvent) => {
-        console.warn(`Barge-in detection WebSocket closed: ${event.reason}`);
-        // Optionally, implement reconnection logic here
-      };
-
-      this.connectionBargInDetectionSocket.onerror = (error: Event) => {
-        console.error('Barge-in detection WebSocket error:', error);
-        this.connectionBargInDetectionSocket.close();
-      };
-    } catch (error) {
-      console.error('Error:', error);
-      // Optionally, implement reconnection logic here
-    }
-  }
-
-  sendBargeInStatus(status: boolean): void {
-    if (this.connectionBargInDetectionSocket && this.connectionBargInDetectionSocket.readyState === WebSocket.OPEN) {
-      const message = JSON.stringify({ barg_in_status: status });
-      this.connectionBargInDetectionSocket.send(message);
-      console.log(`Sent barge-in status to backend: ${status}`);
-    } else {
-      console.warn('Barge-in detection socket is not open');
-    }
-  }
-  sendBargeInAudioBlob(blob: Blob): void {
-    if (this.connectionBargInDetectionSocket && this.connectionBargInDetectionSocket.readyState === WebSocket.OPEN) {
-      
-      const message = JSON.stringify({ blob: blob });
-      this.connectionBargInDetectionSocket.send(message);
-      console.log(`Sent barge-in status to backend: ${status}`);
-    } else {
-      console.warn('Barge-in detection socket is not open');
-    }
-  }
 
   // Handler for when a barge-in is detected
   handleBargeInDetected(): void {

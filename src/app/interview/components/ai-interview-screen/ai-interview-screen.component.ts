@@ -160,7 +160,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     public RealtimeTranscription: RealtimeSpeechToTextTranscriptionService,
     private VideoRecording: VideoRecordingService,
     private ref: ChangeDetectorRef,
-    private speechReco:SpeechRecognitionService,
+    private speechReco: SpeechRecognitionService,
     // private speechToText: TextToSpeechService,
     private ScreenRecordingService: ScreenRecordingService,
     public SocketRealTimeService: SocketRealTimeCommunicationService,
@@ -239,13 +239,8 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   ngOnInit(): void {
     this.start();
     this.startBlinking();
-    // this.RealtimeTranscription.startRecording();
-// this.startListening()
 
-    // this.SocketRealTimeService.connectWebSocket();
-    // this.SocketRealTimeService.connectWebSocket();
-    // this.SocketRealTimeService.connectionBargInDetection()
-    this.SocketRealTimeService.clearAudioSegmentSocket();
+    this.SocketRealTimeService.connectWebSocket();
 
     // this.SocketRealTimeService.ConnectionQuestionAnswerSocket();
 
@@ -264,13 +259,13 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       next: (resp: any) => {
 
         this.textToSpeech.speak(resp);
-        this.SocketRealTimeService.sendBargeInStatus(true)
+        // this.SocketRealTimeService.sendBargeInStatus(true)
 
       },
     })
     this.SocketRealTimeService.resumeUploaded$
       .pipe(
-        filter((resp: any) => resp==false) // Only allow truthy values to pass
+        filter((resp: any) => resp == false) // Only allow truthy values to pass
       )
       .subscribe({
         next: (resp: any) => {
@@ -285,8 +280,10 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       .pipe(filter((resp: any) => resp !== null))
       .subscribe({
         next: (resp: any) => {
+
           this.showPause = false;
           this.subtitle = resp;
+
         },
         error: (err: any) => {
           console.error('Error:', err);
@@ -297,18 +294,20 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
     this.RealtimeTranscription.translationData$
       .pipe(
         filter((data) => data !== null),
-        distinctUntilChanged(),
-        takeUntil(this._unsubscribe$)
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)), 
+        takeUntil(this._unsubscribe$),
       )
       .subscribe({
         next: (res: any) => {
           if (res !== null) {
             this.hideSubmitText = true;
-            this.SocketRealTimeService.submitAnswer(res)
-            // this.SocketRealTimeService.sendAnswer(res);
+            // this.SocketRealTimeService.submitAnswer(res)
+            this.SocketRealTimeService.sendAnswer({
+              type: 'ANSWER',
+              data: res
+            });
             this.subtitle = '';
             this.textToSpeech.stop()
-            // this.SocketRealTimeService.sendBargeInStatus(false)
             this.countdownValueForSentAnswer = 3;
 
             this.countdownIntervalForSentAnswer = setInterval(() => {
@@ -335,43 +334,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
   }
 
 
-  startListening() {
-    this.speechSubscription = this.speechReco.getTranscript({ locale: 'en-US' }).subscribe({
-      next: (text) => {
-         // Will pause here whenever new text is emitted
-        console.log('Transcript:', text);
-        this.RealtimeTranscription.subtitle$.next(text)
 
-        this.RealtimeTranscription.subtitle$.next(text)
-        this.SocketRealTimeService.SilienceDetech$.pipe(
-          filter((resp) => resp.bool === true)
-        ).subscribe({
-          next: (data: any) => {
-            
-            
-            if (text.length && text !== undefined) {
-              
-              this.RealtimeTranscription.translationData$.next(text);
-              this.speechReco.clearTranscript();
-              // this.SocketRealTimeService.closeSilienceDetectionWebSocket()
-              this.showPause = false;
-              this.subtitle = text;
-              console.log('this.subtitle',this.subtitle);
-              
-              this.SocketRealTimeService.sendAnswer(text)
-              text='';
-            }
-
-            this.SocketRealTimeService.SilienceDetech$.next({ bool: false, completeBlob: [] });
-          }
-        });
-      },
-      error: (err) => {
-         // Pauses on any error
-        console.error('Speech recognition error:', err);
-      }
-    });
-  }
 
   stopListening() {
     if (this.speechSubscription) {
@@ -379,9 +342,12 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       console.log('Speech recognition stopped.');
     }
   }
-  sendAnswer()
-  {
-    this.SocketRealTimeService.submitAnswer(this.userAnswer)
+  sendAnswer() {
+    // this.SocketRealTimeService.submitAnswer(this.userAnswer)
+    this.SocketRealTimeService.sendAnswer({
+      type: 'ANSWER',
+      data: this.userAnswer
+    });
 
   }
   startCountdown() {
@@ -655,7 +621,7 @@ export class AiInterviewScreenComponent implements OnInit, AfterViewInit, OnDest
       this.ShowstartAudioRecording = false;
 
       this.RealtimeTranscription.connectWebSocket();
-      
+
       this.SocketRealTimeService.connectionSilienceDetection();
 
 
