@@ -111,7 +111,7 @@ debugger
 
   sendAnswer(answer: any) {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-      debugger;
+      
       this.socket.send(JSON.stringify(answer));
     } else {
       console.warn('WebSocket is not open. Cannot send answer.');
@@ -124,7 +124,7 @@ debugger
 
 
   submitAnswer(answer: any) {
-    debugger;
+    
     this.socket.send(JSON.stringify(answer));
   }
 

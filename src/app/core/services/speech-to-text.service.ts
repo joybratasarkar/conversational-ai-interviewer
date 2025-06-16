@@ -84,7 +84,7 @@ export class RealtimeSpeechToTextTranscriptionService {
           next: (data: any) => {
 
             if (this.transcriptResponse?.length) {
-              debugger;
+              
               this.translationData$.next(this.transcriptResponse);
               // this.SocketRealTimeCommunication.sendAnswer(this.transcriptResponse);
               this.transcriptResponse = '';
