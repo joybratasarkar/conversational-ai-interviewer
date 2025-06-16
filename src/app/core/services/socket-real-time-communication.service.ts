@@ -31,7 +31,8 @@ export class SocketRealTimeCommunicationService {
   reconnectDelay: number = 1000; // 5 seconds delay before trying to reconnect
 
   eventDataArray: any[] = [];
-  test_url_for_ai_interview = environment.test_url_for_ai_interview;
+  // test_url_for_ai_interview = environment.test_url_for_ai_interview;
+  test_url_for_ai_interview = environment.socket_ai_interview;
 
   socket_ai_interview = environment.socket_ai_interview;
   public interviewQuestionCompleteSentence$ = new BehaviorSubject<any>('');
