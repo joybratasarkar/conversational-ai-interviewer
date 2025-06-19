@@ -1,27 +1,71 @@
-# SsAiInterview
+🗣️ Conversational AI Interviewer – Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+This is the frontend for the Conversational AI Interviewer, a web-based interface built with Angular that enables interactive, real-time interviews powered by AI.
 
-## Development server
+🌐 Live Demo: conversational-ai-interviewer.vercel.app
+🚀 Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+    🎙️ Real-time audio/video interview interface
 
-## Code scaffolding
+    💬 WebSocket communication with FastAPI backend
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    💻 Responsive, modern Angular UI
 
-## Build
+🛠️ Project Setup
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+This project was generated with Angular CLI version 16.0.0.
+🔧 Development Server
 
-## Running unit tests
+To start the dev server:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+npm install
+ng serve
 
-## Running end-to-end tests
+Then open your browser at http://localhost:4200.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+The app will automatically reload if you modify any of the source files.
+📦 Build
 
-## Further help
+To create a production build:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ng build
+
+Build artifacts will be generated in the dist/ directory.
+🧪 Running Tests
+Unit Tests
+
+ng test
+
+Executes unit tests via Karma.
+End-to-End (E2E) Tests
+
+To run E2E tests:
+
+ng e2e
+
+Make sure to install a testing framework first (e.g. Cypress or Protractor).
+🧰 Code Scaffolding
+
+To generate components, services, etc.:
+
+ng generate component ComponentName
+ng generate service ServiceName
+
+
+
+🌐 Deployment
+
+This app is deployed on Vercel. To deploy:
+
+    Push your code to GitHub
+
+    Connect the repo on Vercel
+
+    Set Angular as the framework and use ng build as the build command
+
+📄 License
+
+This project is open-source and available under the MIT License.
+🙌 Contributions
+
+PRs are welcome! If you’d like to improve the UI/UX, fix a bug, or integrate new features — feel free to open an issue or submit a PR.
